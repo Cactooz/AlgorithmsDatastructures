@@ -15,7 +15,9 @@ class Introduction {
     public static void Main(String[] args) {
         Console.WriteLine("Started");
 
-        //Accuracy();
+        for(int i = 0; i < 10; i++)
+            Console.WriteLine($"Resolution {Accuracy()}ns");
+
         //AccuracySum();
         //Console.WriteLine($"1000: {RandomArraySum(1000, true)} ns");
         //Console.WriteLine($"1000: {RandomArraySum(1000, false)} ns");
@@ -39,12 +41,12 @@ class Introduction {
         Console.WriteLine($"250: {Search(250)}");
         Console.WriteLine($"500: {Search(500)}");*/
 
-        Console.WriteLine($"10:  {SearchDuplicates(10)}");
+        /*Console.WriteLine($"10:  {SearchDuplicates(10)}");
         Console.WriteLine($"25:  {SearchDuplicates(25)}");
         Console.WriteLine($"50:  {SearchDuplicates(50)}");
         Console.WriteLine($"100: {SearchDuplicates(100)}");
         Console.WriteLine($"250: {SearchDuplicates(250)}");
-        Console.WriteLine($"500: {SearchDuplicates(500)}");
+        Console.WriteLine($"500: {SearchDuplicates(500)}");*/
 
         Console.WriteLine("Done");
     }
@@ -53,12 +55,12 @@ class Introduction {
     /// Prints the time it takes for 0 operations, 10 times.
     /// Used to see the accuracy of the <c>Stopwatch</c>.
     /// </summary>
-    private static void Accuracy() {
-        for(int i = 0; i < 10; i++) {
-            long n0 = Stopwatch.GetTimestamp();
-            long n1 = Stopwatch.GetTimestamp();
-            Console.WriteLine($"Resolution {(n1 - n0) * nanosecondsPerTick} ns");
-        }
+    /// <returns>Measured time in nanoseconds.</returns>
+    private static double Accuracy() {
+        long n0 = Stopwatch.GetTimestamp();
+        long n1 = Stopwatch.GetTimestamp();
+
+        return (n1 - n0) * nanosecondsPerTick;
     }
 
     /// <summary>
