@@ -1,8 +1,43 @@
 ﻿// See https://aka.ms/new-console-template for more information
+using System.Diagnostics;
 
-//Create a simple calculator operation and run it
-Calculator calculator = new Calculator(new Item[]{new Item(ItemType.VALUE,3), new Item(ItemType.VALUE, 4), new Item(ItemType.ADD, 0), new Item(ItemType.VALUE, 2), new Item(ItemType.VALUE, 4), new Item(ItemType.ADD, 0), new Item(ItemType.MUL, 0)});
-Console.WriteLine(calculator.Run());
+// Variable for converting GetTimestamp output to nanoseconds
+long nanosecondsPerTick = 1000000000 / Stopwatch.Frequency;
+// The minimum time for the benchmark
+long minTime = long.MaxValue;
+// Amount of additions made in the benchmark
+int additions = 5000;
+// Amount of runs the benchmark is doing
+int runAmount = 500000;
+
+for(int i = 0; i < runAmount; i++) {
+    Item[] operations = new Item[additions*2+1];
+    //Add the first 5 to add
+    operations[0] = new Item(ItemType.VALUE, 5);
+
+    //Loop through adding the resisting additions
+    for(int j = 1; j < additions * 2 + 1; j+=2) {
+        operations[j] = new Item(ItemType.VALUE, 5);
+        operations[j+1] = new Item(ItemType.ADD, 0);
+    }
+
+    //Create the calculator with the operations
+    Calculator calculator = new Calculator(operations);
+
+    //Run and time the calculations
+    long t0 = Stopwatch.GetTimestamp();
+    calculator.Run();
+    long t1 = Stopwatch.GetTimestamp();
+
+    long time = (t1 - t0) * nanosecondsPerTick;
+
+    //If the new time is smaller, save it
+    if(time < minTime)
+        minTime = time;
+}
+
+//Print the smallest time
+Console.WriteLine($"{minTime}ns");
 
 /// <summary>
 /// Different <c>ItemType</c>s for math operations
@@ -67,7 +102,7 @@ public class Calculator {
     public Calculator(Item[] expressions) {
         this.expressions = expressions;
         instructionPointer = 0;
-        stack = new DynamicStack(2);
+        stack = new DynamicStack(8);
     }
 
     /// <summary>
@@ -86,7 +121,6 @@ public class Calculator {
     /// </summary>
     private void Step() {
         Item next = expressions[instructionPointer++];
-        int x, y;
 
         switch(next.Type) {
             case ItemType.VALUE:
