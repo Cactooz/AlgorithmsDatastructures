@@ -7,6 +7,7 @@ class Introduction {
     /// Variable for converting GetTimestamp output to nanoseconds
     /// </summary>
     static long nanosecondsPerTick = 1000000000 / Stopwatch.Frequency;
+    static Random rand = new Random();
 
     /// <summary>
     /// Main public method to run the different tests
@@ -15,7 +16,9 @@ class Introduction {
         Console.WriteLine("Started");
 
         //Accuracy();
-        AccuracySum();
+        //AccuracySum();
+        Console.WriteLine($"1000: {RandomArraySum(1000, true)} ns");
+        Console.WriteLine($"1000: {RandomArraySum(1000, false)} ns");
 
         Console.WriteLine("Done");
     }
@@ -45,5 +48,49 @@ class Introduction {
             long n1 = Stopwatch.GetTimestamp();
             Console.WriteLine($"Resolution {(n1 - n0) * nanosecondsPerTick} ns");
         }
+    }
+
+    /// <summary>
+    /// Sums up numbers in an array from random positions in the array.
+    /// </summary>
+    /// <param name="n">The size of the index array</param>
+    /// <param name="rngFirst">Desides if the random numbers should be generated on the fly
+    /// or if there are an index array where there random positions are already generated.</param>
+    private static double RandomArraySum(int n, bool rngFirst) {
+
+        //Create and fill the array
+        int[] array = new int[n];
+        for(int i = 0; i < n; i++) {
+            array[i] = i;
+        }
+
+        int sum = 0;
+        long t0 = 0;
+
+        if(rngFirst) {
+            //Get random index for where to check in the array
+            int[] index = new int[n];
+            for(int i = 0; i < n; i++) {
+                index[i] = (int)rand.NextInt64(n);
+            }
+
+            t0 = Stopwatch.GetTimestamp();
+
+            //Sum the numbers togheter from index positions
+            for(int i = 0; i < n; i++) {
+                sum += array[index[i]];
+            }
+        } else {
+            t0 = Stopwatch.GetTimestamp();
+
+            //Sum the numbers togheter from random positions
+            for(int i = 0; i < n; i++) {
+                sum += array[rand.NextInt64(n)];
+            }
+        }
+
+        long t1 = Stopwatch.GetTimestamp();
+
+        return (t1 - t0) * nanosecondsPerTick;
     }
 }
