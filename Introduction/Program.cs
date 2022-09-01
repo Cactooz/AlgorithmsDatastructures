@@ -19,34 +19,34 @@ class Introduction {
             Console.WriteLine($"Resolution {Accuracy()}ns");
 
         //AccuracySum();
-        //Console.WriteLine($"1000: {RandomArraySum(1000, true)} ns");
-        //Console.WriteLine($"1000: {RandomArraySum(1000, false)} ns");
+        //Console.WriteLine($"1000: {RandomArraySum(1000, true)}ns");
+        //Console.WriteLine($"1000: {RandomArraySum(1000, false)}ns");
 
-        /*Console.WriteLine($"10:     {Access(10)}");
-        Console.WriteLine($"25:     {Access(25)}");
-        Console.WriteLine($"50:     {Access(50)}");
-        Console.WriteLine($"100:    {Access(100)}");
-        Console.WriteLine($"500:    {Access(500)}");
-        Console.WriteLine($"1000:   {Access(1000)}");
-        Console.WriteLine($"10000:  {Access(10000)}");
-        Console.WriteLine($"25000:  {Access(25000)}");
-        Console.WriteLine($"50000:  {Access(50000)}");
-        Console.WriteLine($"100000: {Access(100000)}");
-        Console.WriteLine($"1000000:{Access(1000000)}");*/
+        /*Console.WriteLine($"10:     {Access(10)}ns");
+        Console.WriteLine($"25:     {Access(25)}ns");
+        Console.WriteLine($"50:     {Access(50)}ns");
+        Console.WriteLine($"100:    {Access(100)}ns");
+        Console.WriteLine($"500:    {Access(500)}ns");
+        Console.WriteLine($"1000:   {Access(1000)}ns");
+        Console.WriteLine($"10000:  {Access(10000)}ns");
+        Console.WriteLine($"25000:  {Access(25000)}ns");
+        Console.WriteLine($"50000:  {Access(50000)}ns");
+        Console.WriteLine($"100000: {Access(100000)}ns");
+        Console.WriteLine($"1000000:{Access(1000000)}ns");*/
 
-        /*Console.WriteLine($"10:  {Search(10)}");
-        Console.WriteLine($"25:  {Search(25)}");
-        Console.WriteLine($"50:  {Search(50)}");
-        Console.WriteLine($"100: {Search(100)}");
-        Console.WriteLine($"250: {Search(250)}");
-        Console.WriteLine($"500: {Search(500)}");*/
+        /*Console.WriteLine($"10:  {Search(10)}ns");
+        Console.WriteLine($"25:  {Search(25)}ns");
+        Console.WriteLine($"50:  {Search(50)}ns");
+        Console.WriteLine($"100: {Search(100)}ns");
+        Console.WriteLine($"250: {Search(250)}ns");
+        Console.WriteLine($"500: {Search(500)}ns");*/
 
-        /*Console.WriteLine($"10:  {SearchDuplicates(10)}");
-        Console.WriteLine($"25:  {SearchDuplicates(25)}");
-        Console.WriteLine($"50:  {SearchDuplicates(50)}");
-        Console.WriteLine($"100: {SearchDuplicates(100)}");
-        Console.WriteLine($"250: {SearchDuplicates(250)}");
-        Console.WriteLine($"500: {SearchDuplicates(500)}");*/
+        /*Console.WriteLine($"10:  {SearchDuplicates(10)}ns");
+        Console.WriteLine($"25:  {SearchDuplicates(25)}ns");
+        Console.WriteLine($"50:  {SearchDuplicates(50)}ns");
+        Console.WriteLine($"100: {SearchDuplicates(100)}ns");
+        Console.WriteLine($"250: {SearchDuplicates(250)}ns");
+        Console.WriteLine($"500: {SearchDuplicates(500)}ns");*/
 
         Console.WriteLine("Done");
     }
