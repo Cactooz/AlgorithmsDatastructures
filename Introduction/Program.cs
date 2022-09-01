@@ -17,8 +17,20 @@ class Introduction {
 
         //Accuracy();
         //AccuracySum();
-        Console.WriteLine($"1000: {RandomArraySum(1000, true)} ns");
-        Console.WriteLine($"1000: {RandomArraySum(1000, false)} ns");
+        //Console.WriteLine($"1000: {RandomArraySum(1000, true)} ns");
+        //Console.WriteLine($"1000: {RandomArraySum(1000, false)} ns");
+
+        Console.WriteLine($"10:     {Access(10)}");
+        Console.WriteLine($"25:     {Access(25)}");
+        Console.WriteLine($"50:     {Access(50)}");
+        Console.WriteLine($"100:    {Access(100)}");
+        Console.WriteLine($"500:    {Access(500)}");
+        Console.WriteLine($"1000:   {Access(1000)}");
+        Console.WriteLine($"10000:  {Access(10000)}");
+        Console.WriteLine($"25000:  {Access(25000)}");
+        Console.WriteLine($"50000:  {Access(50000)}");
+        Console.WriteLine($"100000: {Access(100000)}");
+        Console.WriteLine($"1000000:{Access(1000000)}");
 
         Console.WriteLine("Done");
     }
@@ -93,4 +105,50 @@ class Introduction {
 
         return (t1 - t0) * nanosecondsPerTick;
     }
+
+    /// <summary>
+    /// Measures the time it takes access elements in arrays.
+    /// </summary>
+    /// <param name="n">The size of the array</param>
+    /// <returns>Average of the measured run time in nanoseconds.</returns>
+    private static double Access(int n) {
+        int k = 10_000_000; //Amount of times the test is run
+        int l = 100; //Amount of additions per test
+
+        //Get random index points
+        int[] index = new int[l];
+        for(int i = 0; i < l; i++)
+            index[i] = (int)rand.NextInt64(n);
+
+        //Fill the base array
+        int[] array = new int[n];
+        for(int i = 0; i < n; i++)
+            array[i] = 1;
+
+        int sum = 0;
+        long t0 = Stopwatch.GetTimestamp();
+
+        //Add the random index numbers together
+        for(int i = 0; i < k; i++) {
+            for(int j = 0; j < l; j++)
+                sum += array[index[j]];
+        }
+
+        long tAccess = Stopwatch.GetTimestamp() - t0;
+
+        int dummySum = 0;
+        t0 = Stopwatch.GetTimestamp();
+
+        //Dummy loop to get time for the loop
+        for(int i = 0; i < k; i++) {
+            for(int j = 0; j < l; j++)
+                dummySum += 1;
+        }
+
+        long tDummy = Stopwatch.GetTimestamp() - t0;
+
+        //Return just the time to access the array
+        return (tAccess - tDummy) * nanosecondsPerTick / (double)(k * l);
+    }
+
 }
