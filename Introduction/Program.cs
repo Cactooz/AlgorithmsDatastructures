@@ -20,7 +20,7 @@ class Introduction {
         //Console.WriteLine($"1000: {RandomArraySum(1000, true)} ns");
         //Console.WriteLine($"1000: {RandomArraySum(1000, false)} ns");
 
-        Console.WriteLine($"10:     {Access(10)}");
+        /*Console.WriteLine($"10:     {Access(10)}");
         Console.WriteLine($"25:     {Access(25)}");
         Console.WriteLine($"50:     {Access(50)}");
         Console.WriteLine($"100:    {Access(100)}");
@@ -30,7 +30,14 @@ class Introduction {
         Console.WriteLine($"25000:  {Access(25000)}");
         Console.WriteLine($"50000:  {Access(50000)}");
         Console.WriteLine($"100000: {Access(100000)}");
-        Console.WriteLine($"1000000:{Access(1000000)}");
+        Console.WriteLine($"1000000:{Access(1000000)}");*/
+
+        Console.WriteLine($"10:  {Search(10)}");
+        Console.WriteLine($"25:  {Search(25)}");
+        Console.WriteLine($"50:  {Search(50)}");
+        Console.WriteLine($"100: {Search(100)}");
+        Console.WriteLine($"250: {Search(250)}");
+        Console.WriteLine($"500: {Search(500)}");
 
         Console.WriteLine("Done");
     }
@@ -151,4 +158,46 @@ class Introduction {
         return (tAccess - tDummy) * nanosecondsPerTick / (double)(k * l);
     }
 
+    /// <summary>
+    /// Measures the time it takes to search for a specific key in an array.
+    /// </summary>
+    /// <param name="n">The size of the array</param>
+    /// <returns>Average of the measured run time in nanoseconds.</returns>
+    private static double Search(int n) {
+        int k = 1000; //Amount of times the test is run
+        int m = 1000; //Number of searches for each run
+
+        int[] keys = new int[m];
+        int[] array = new int[n];
+
+        long tTotal = 0;
+
+        for(int i = 0; i < k; i++) {
+            //Fill the array with random numbers
+            for(int j = 0; j < n; j++)
+                array[j] = (int)rand.NextInt64(n * 10);
+
+            //Get random numbers for the keys
+            for(int j = 0; j < m; j++)
+                keys[j] = (int)rand.NextInt64(n * 10);
+
+            int sum = 0;
+            long t0 = Stopwatch.GetTimestamp();
+
+            //Search for the keys in the array and sum them togheter
+            for(int ki = 0; ki < m; ki++) {
+                int key = keys[ki];
+                for(int j = 0; j < n; j++) {
+                    if(array[j] == key) {
+                        sum++;
+                        break;
+                    }
+                }
+            }
+            //Add to the total time
+            tTotal += Stopwatch.GetTimestamp() - t0;
+        }
+
+        return tTotal * nanosecondsPerTick / (double)(k * m);
+    }
 }
