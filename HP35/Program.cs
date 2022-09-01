@@ -1,5 +1,4 @@
 ﻿// See https://aka.ms/new-console-template for more information
-using System.Collections;
 
 //Create a simple calculator operation and run it
 Calculator calculator = new Calculator(new Item[]{new Item(ItemType.VALUE,3), new Item(ItemType.VALUE, 4), new Item(ItemType.ADD, 0), new Item(ItemType.VALUE, 2), new Item(ItemType.VALUE, 4), new Item(ItemType.ADD, 0), new Item(ItemType.MUL, 0)});
@@ -59,7 +58,7 @@ public class Calculator {
     /// <summary>
     /// The stack storing all pushed operations and values in the form of <c>Item</c>
     /// </summary>
-    private Stack stack;
+    private StaticStack stack;
 
     /// <summary>
     /// Construcor for <c>Calculator</c>
@@ -68,7 +67,7 @@ public class Calculator {
     public Calculator(Item[] expressions) {
         this.expressions = expressions;
         instructionPointer = 0;
-        stack = new Stack();
+        stack = new StaticStack(4);
     }
 
     /// <summary>
@@ -79,7 +78,7 @@ public class Calculator {
         while(instructionPointer < expressions.Length) {
             Step();
         }
-        return (int)stack.Pop();
+        return stack.Pop();
     }
 
     /// <summary>
@@ -94,16 +93,16 @@ public class Calculator {
                 stack.Push(next.Value);
                 break;
             case ItemType.ADD:
-                stack.Push((int)stack.Pop() + (int)stack.Pop());
+                stack.Push(stack.Pop() + stack.Pop());
                 break;
             case ItemType.SUB:
-                stack.Push((int)stack.Pop() - (int)stack.Pop());
+                stack.Push(stack.Pop() - stack.Pop());
                 break;
             case ItemType.MUL:
-                stack.Push((int)stack.Pop() * (int)stack.Pop());
+                stack.Push(stack.Pop() * stack.Pop());
                 break;
             case ItemType.DIV:
-                stack.Push((int)stack.Pop() / (int)stack.Pop());
+                stack.Push(stack.Pop() / stack.Pop());
                 break;
         }
     }
