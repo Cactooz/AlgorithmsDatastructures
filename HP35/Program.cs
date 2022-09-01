@@ -58,7 +58,7 @@ public class Calculator {
     /// <summary>
     /// The stack storing all pushed operations and values in the form of <c>Item</c>
     /// </summary>
-    private StaticStack stack;
+    private DynamicStack stack;
 
     /// <summary>
     /// Construcor for <c>Calculator</c>
@@ -67,7 +67,7 @@ public class Calculator {
     public Calculator(Item[] expressions) {
         this.expressions = expressions;
         instructionPointer = 0;
-        stack = new StaticStack(4);
+        stack = new DynamicStack(2);
     }
 
     /// <summary>
