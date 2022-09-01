@@ -130,7 +130,7 @@ public class DynamicStack {
         int[] tmpArrayStack = new int[size];
 
         //Fill the new temporary array stack with all the old items
-        for(int i = 0; i < size - changeSize; i++)
+        for(int i = 0; i < size; i++)
             tmpArrayStack[i] = arrayStack[i];
 
         //Overwrite the old arrayStack with the new smaller array stack
