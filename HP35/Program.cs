@@ -42,7 +42,7 @@ Console.WriteLine($"{minTime}ns");
 /// <summary>
 /// Different <c>ItemType</c>s for math operations
 /// </summary>
-public enum ItemType { ADD, SUB, MUL, DIV, VALUE, MOD, ADDMUL }
+public enum ItemType { ADD, SUB, MUL, DIV, VALUE, MOD10, MOD, ADDMUL }
 
 /// <summary>
 /// <c>Item</c> containing a value and the type of the value
@@ -138,8 +138,11 @@ public class Calculator {
             case ItemType.DIV:
                 stack.Push(stack.Pop() / stack.Pop());
                 break;
-            case ItemType.MOD:
+            case ItemType.MOD10:
                 stack.Push(stack.Pop() % 10);
+                break;
+            case ItemType.MOD:
+                stack.Push(stack.Pop() % stack.Pop());
                 break;
             case ItemType.ADDMUL:
                 int sum = stack.Pop() * stack.Pop();
