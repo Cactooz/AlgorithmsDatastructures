@@ -18,7 +18,7 @@ class SortedData {
         for(int i = 1000; i <= 10000; i += 1000) {
             long minTime = long.MaxValue;
             long time = 0;
-            int[] array = ArrayFillRandom(new int[25 * i]);
+            int[] array = ArrayFillRandom(new int[i]);
 
             //Chose if the array should be searched before the search or not
             bool sort = true;
@@ -30,7 +30,8 @@ class SortedData {
             for(int j = 0; j < runAmount; j++) {
                 //Measure the time it takes to search for the key
                 long t0 = Stopwatch.GetTimestamp();
-                Search(array, 5, sort);
+                //Search(array, 5, sort);
+                BinarySearch(array, 5);
                 long t1 = Stopwatch.GetTimestamp();
 
                 //Save only the fastest time
@@ -64,11 +65,44 @@ class SortedData {
     /// <returns>If the <c>key</c> can be found in the <c>array</c> or not.</returns>
     private static bool Search(int[] array, int key, bool sorted) {
         for(int i = 0; i < array.Length; i++) {
+            //Return early if i is larger than the key and the array is sorted
             if(i > key && sorted)
                 return false;
             else if(array[i] == key)
                 return true;
         }
         return false;
+    }
+
+    /// <summary>
+    /// Binary searching for <c>key</c> in inputted <c>array</c>.
+    /// The <c>array</c> must be sorted.
+    /// </summary>
+    /// <param name="array">The array to search through.</param>
+    /// <param name="key">The key to search for.</param>
+    /// <returns>If the <c>key</c> can be found in the <c>array</c> or not.</returns>
+    private static bool BinarySearch(int[] array, int key) {
+        int first = 0;
+        int last = array.Length - 1;
+
+        while(true) {
+            //Set the mid between the first and last point
+            int mid = (first + last) / 2;
+
+            if(array[mid] == key)
+                return true;
+            //If the key is larger than the current value, set the first point to current mid
+            if(array[mid] < key && mid < last) {
+                first = mid + 1;
+                continue;
+            }
+            //If the key is smaller than the current value, set the last point to current mid
+            else if(array[mid] > key && mid > first) {
+                last = mid - 1;
+                continue;
+            }
+            //If first = last, then there are no value in the array matching the key
+            return false;
+        }
     }
 }
