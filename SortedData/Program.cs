@@ -20,10 +20,13 @@ class SortedData {
             long time = 0;
             int[] array = ArrayFillRandom(new int[25 * i]);
 
+            //Sort the array for SearchSorted
+            Array.Sort(array);
+
             for(int j = 0; j < runAmount; j++) {
                 //Measure the time it takes to search for the key
                 long t0 = Stopwatch.GetTimestamp();
-                SearchUnsorted(array, 5);
+                SearchSorted(array, 5);
                 long t1 = Stopwatch.GetTimestamp();
 
                 //Save only the fastest time
@@ -57,6 +60,22 @@ class SortedData {
     private static bool SearchUnsorted(int[] array, int key) {
         for(int i = 0; i < array.Length; i++) {
             if(array[i] == key)
+                return true;
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// Searches for a <c>key</c> in an sorted <c>array</c>.
+    /// </summary>
+    /// <param name="array">The array to search through.</param>
+    /// <param name="key">The key to search for.</param>
+    /// <returns></returns>
+    private static bool SearchSorted(int[] array, int key) {
+        for(int i = 0; i < array.Length; i++) {
+            if(i > key)
+                return false;
+            else if(array[i] == key)
                 return true;
         }
         return false;
