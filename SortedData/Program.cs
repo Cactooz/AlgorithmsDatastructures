@@ -20,13 +20,17 @@ class SortedData {
             long time = 0;
             int[] array = ArrayFillRandom(new int[25 * i]);
 
-            //Sort the array for SearchSorted
-            Array.Sort(array);
+            //Chose if the array should be searched before the search or not
+            bool sort = true;
+
+            //Sort the array for sorted array search
+            if(sort)
+                Array.Sort(array);
 
             for(int j = 0; j < runAmount; j++) {
                 //Measure the time it takes to search for the key
                 long t0 = Stopwatch.GetTimestamp();
-                SearchSorted(array, 5);
+                Search(array, 5, sort);
                 long t1 = Stopwatch.GetTimestamp();
 
                 //Save only the fastest time
@@ -52,28 +56,15 @@ class SortedData {
     }
 
     /// <summary>
-    /// Searches for a <c>key</c> in an unsorted <c>array</c>.
+    /// Searches for a <c>key</c> in an unsorted or sorted <c>array</c>.
     /// </summary>
     /// <param name="array">The array to search through.</param>
     /// <param name="key">The key to search for.</param>
-    /// <returns></returns>
-    private static bool SearchUnsorted(int[] array, int key) {
+    /// <param name="sorted">It the inputted array is sorted or not</param>
+    /// <returns>If the <c>key</c> can be found in the <c>array</c> or not.</returns>
+    private static bool Search(int[] array, int key, bool sorted) {
         for(int i = 0; i < array.Length; i++) {
-            if(array[i] == key)
-                return true;
-        }
-        return false;
-    }
-
-    /// <summary>
-    /// Searches for a <c>key</c> in an sorted <c>array</c>.
-    /// </summary>
-    /// <param name="array">The array to search through.</param>
-    /// <param name="key">The key to search for.</param>
-    /// <returns></returns>
-    private static bool SearchSorted(int[] array, int key) {
-        for(int i = 0; i < array.Length; i++) {
-            if(i > key)
+            if(i > key && sorted)
                 return false;
             else if(array[i] == key)
                 return true;
