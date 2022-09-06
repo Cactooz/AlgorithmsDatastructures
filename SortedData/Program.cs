@@ -12,14 +12,14 @@ class SortedData {
     /// </summary>
     public static void Main(string[] args) {
         //The amount of times the benchmark should be run
-        int runAmount = 10000;
+        int runAmount = 1000;
         Random random = new Random();
 
         //Do the benchmark for multiple array sizes
-        for(int i = 1000; i <= 10000; i += 1000) {
+        for(int i = 10000; i <= 100000; i += 10000) {
             long time = 0;
             int[] array;
-            int[] keys = ArrayFillSorted(new int[100]);
+            int[] keys = ArrayFillSorted(new int[i]);
 
             //Chose if the array should be searched before the search or not
             bool sort = true;
@@ -40,7 +40,8 @@ class SortedData {
                 //Search(array, key, sort);
                 //BinarySearch(array, key);
                 //SearchDuplicatesBinary(array, keys);
-                SearchDuplicates(array, keys);
+                //SearchDuplicates(array, keys);
+                SearchDuplicatesScrap(array, keys);
                 long t1 = Stopwatch.GetTimestamp();
 
                 //Add to the total time
@@ -146,5 +147,23 @@ class SortedData {
     private static void SearchDuplicates(int[] array, int[] keys) {
         foreach(int key in keys)
             Search(array, key, true);
+    }
+
+    /// <summary>
+    /// Search for a duplicate item in array from another array with keys by checking through both arrays simultaneously.
+    /// Moving forward in one of the arrays if the other arrays item is larger.
+    /// </summary>
+    /// <param name="array">Sorted array to search in.</param>
+    /// <param name="keys">Sorted array with keys to search for.</param>
+    private static void SearchDuplicatesScrap(int[] array, int[] keys) {
+        int i = 0;
+        int j = 0;
+        int arrayLength = array.Length;
+        int keysLength = keys.Length;
+        while(i != arrayLength && j != keysLength) {
+            if(array[i] > keys[j])
+                j++;
+            i++;
+        }
     }
 }
