@@ -18,14 +18,18 @@ class SortedData {
         //Do the benchmark for multiple array sizes
         for(int i = 1000; i <= 10000; i += 1000) {
             long time = 0;
-            int[] array = ArrayFillRandom(new int[i]);
+            int[] array;
+            int[] keys = ArrayFillSorted(new int[100]);
 
             //Chose if the array should be searched before the search or not
             bool sort = true;
 
             //Sort the array for sorted array search
             if(sort)
-                Array.Sort(array);
+                array = ArrayFillSorted(new int[i]);
+            else
+                array = ArrayFillRandom(new int[i]);
+
 
             for(int j = 0; j < runAmount; j++) {
                 //Generate a random key
@@ -34,7 +38,8 @@ class SortedData {
                 //Measure the time it takes to search for the key
                 long t0 = Stopwatch.GetTimestamp();
                 //Search(array, key, sort);
-                BinarySearch(array, key);
+                //BinarySearch(array, key);
+                SearchDuplicates(array, keys);
                 long t1 = Stopwatch.GetTimestamp();
 
                 //Add to the total time
@@ -65,8 +70,8 @@ class SortedData {
     private static int[] ArrayFillSorted(int[] array) {
         Random random = new Random();
         int next = 0;
-        foreach(int i in array) {
-            next = random.Next(10) + 1;
+        for(int i = 0; i < array.Length; i++) {
+            next += random.Next(10) + 1;
             array[i] = next;
         }
         return array;
