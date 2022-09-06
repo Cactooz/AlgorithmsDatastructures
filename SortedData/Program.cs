@@ -57,6 +57,21 @@ class SortedData {
     }
 
     /// <summary>
+    /// Fill array with sorted random numbers, where there are no duplicate numbers.
+    /// </summary>
+    /// <param name="array">The array to fill with random numbers.</param>
+    /// <returns>The same array with sorted random numbers.</returns>
+    private static int[] ArrayFillSorted(int[] array) {
+        Random random = new Random();
+        int next = 0;
+        foreach(int i in array) {
+            next = random.Next(10) + 1;
+            array[i] = next;
+        }
+        return array;
+    }
+
+    /// <summary>
     /// Searches for a <c>key</c> in an unsorted or sorted <c>array</c>.
     /// </summary>
     /// <param name="array">The array to search through.</param>
