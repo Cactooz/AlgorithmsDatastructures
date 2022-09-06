@@ -105,4 +105,18 @@ class SortedData {
             return false;
         }
     }
+
+    /// <summary>
+    /// Search for a duplicate item in array from another array with keys
+    /// </summary>
+    /// <param name="array">Array to search in.</param>
+    /// <param name="keys">Array with keys to search for.</param>
+    /// <returns>The amount of times the keys exist in the array.</returns>
+    private static int SearchDuplicates(int[] array, int[] keys) {
+        int duplicates = 0;
+        foreach(int key in keys)
+            if(BinarySearch(array, key))
+                duplicates++;
+        return duplicates;
+    }
 }
