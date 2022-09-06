@@ -13,10 +13,10 @@ class SortedData {
     public static void Main(string[] args) {
         //The amount of times the benchmark should be run
         int runAmount = 10000;
+        Random random = new Random();
 
         //Do the benchmark for multiple array sizes
         for(int i = 1000; i <= 10000; i += 1000) {
-            long minTime = long.MaxValue;
             long time = 0;
             int[] array = ArrayFillRandom(new int[i]);
 
@@ -28,19 +28,20 @@ class SortedData {
                 Array.Sort(array);
 
             for(int j = 0; j < runAmount; j++) {
+                //Generate a random key
+                int key = random.Next(array.Length);
+
                 //Measure the time it takes to search for the key
                 long t0 = Stopwatch.GetTimestamp();
-                //Search(array, 5, sort);
-                BinarySearch(array, 5);
+                //Search(array, key, sort);
+                BinarySearch(array, key);
                 long t1 = Stopwatch.GetTimestamp();
 
-                //Save only the fastest time
-                time = (t1 - t0) * nanosecondsPerTick;
-                if(time < minTime)
-                    minTime = time;
+                //Add to the total time
+                time += (t1 - t0) * nanosecondsPerTick;
             }
 
-            Console.WriteLine($"{i}: {time}ns");
+            Console.WriteLine($"{i}: {time/runAmount}ns");
         }
     }
 
