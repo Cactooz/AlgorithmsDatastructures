@@ -39,6 +39,7 @@ class SortedData {
                 long t0 = Stopwatch.GetTimestamp();
                 //Search(array, key, sort);
                 //BinarySearch(array, key);
+                //SearchDuplicatesBinary(array, keys);
                 SearchDuplicates(array, keys);
                 long t1 = Stopwatch.GetTimestamp();
 
@@ -128,16 +129,22 @@ class SortedData {
     }
 
     /// <summary>
-    /// Search for a duplicate item in array from another array with keys
+    /// Search for a duplicate item in array from another array with keys using <c>BinarySearch</c>.
     /// </summary>
     /// <param name="array">Array to search in.</param>
     /// <param name="keys">Array with keys to search for.</param>
-    /// <returns>The amount of times the keys exist in the array.</returns>
-    private static int SearchDuplicates(int[] array, int[] keys) {
-        int duplicates = 0;
+    private static void SearchDuplicatesBinary(int[] array, int[] keys) {
         foreach(int key in keys)
-            if(BinarySearch(array, key))
-                duplicates++;
-        return duplicates;
+            BinarySearch(array, key);
+    }
+
+    /// <summary>
+    /// Search for a duplicate item in array from another array with keys using sorted <c>Search</c>.
+    /// </summary>
+    /// <param name="array">Array to search in.</param>
+    /// <param name="keys">Array with keys to search for.</param>
+    private static void SearchDuplicates(int[] array, int[] keys) {
+        foreach(int key in keys)
+            Search(array, key, true);
     }
 }
