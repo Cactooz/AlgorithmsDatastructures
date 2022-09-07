@@ -163,6 +163,7 @@ class SortedData {
         while(i != arrayLength && j != keysLength) {
             if(array[i] > keys[j])
                 j++;
+            else
             i++;
         }
     }
