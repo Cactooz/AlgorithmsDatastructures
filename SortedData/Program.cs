@@ -33,7 +33,7 @@ class SortedData {
 
             for(int j = 0; j < runAmount; j++) {
                 //Generate a random key
-                int key = random.Next(array.Length);
+                int key = random.Next(i*5);
 
                 //Measure the time it takes to search for the key
                 long t0 = Stopwatch.GetTimestamp();
@@ -136,7 +136,7 @@ class SortedData {
     /// <param name="keys">Array with keys to search for.</param>
     private static void SearchDuplicatesBinary(int[] array, int[] keys) {
         foreach(int key in keys)
-            BinarySearch(array, key);
+            BinarySearch(array, key*5);
     }
 
     /// <summary>
