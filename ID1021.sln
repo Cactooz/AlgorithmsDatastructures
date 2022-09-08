@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Introduction", "Introductio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HP35", "HP35\HP35.csproj", "{5E8C0003-F032-496B-9BDB-7571DF2DF7C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SortedData", "SortedData\SortedData.csproj", "{8779B684-C29A-4A64-BEE7-FDF3F143942A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Searching", "SortedData\Searching.csproj", "{8779B684-C29A-4A64-BEE7-FDF3F143942A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

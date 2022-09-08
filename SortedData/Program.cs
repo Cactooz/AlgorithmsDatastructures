@@ -1,7 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using System.Diagnostics;
 
-class SortedData {
+class Searching {
     /// <summary>
     /// Variable for converting GetTimestamp output to nanoseconds.
     /// </summary>
