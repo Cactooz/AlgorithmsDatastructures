@@ -3,40 +3,27 @@
 namespace Sorting {
     internal class Program {
         static void Main(string[] args) {
-            long bubbleTime = 0;
-            long selectionTime = 0;
-            long insertionTime = 0;
-            int runAmount = 1000;
+            // Variable for converting GetTimestamp output to nanoseconds.
             long nanosecondsPerTick = 1000000000 / Stopwatch.Frequency;
 
-            for(int i = 0; i < runAmount; i++) {
-                int[] bubble = Utilities.RandomArray(10);
-                int[] selection = Utilities.RandomArray(10);
-                int[] insertion = Utilities.RandomArray(10);
+            //Amount of times to run the test for average time
+            int runAmount = 10000;
 
-                long t0 = Stopwatch.GetTimestamp();
-                BubbleSort.Sort(bubble);
-                long t1 = Stopwatch.GetTimestamp();
+            long time = 0;
 
-                bubbleTime += (t1 - t0) * nanosecondsPerTick;
+            for(int i = 100; i < 100000; i*=2) {
+                for(int j = 0; j < runAmount; j++) {
+                    int[] array = Utilities.RandomArray(i);
 
+                    long t0 = Stopwatch.GetTimestamp();
+                    SelectionSort.Sort(array);
+                    //InsertionSort.Sort(array);
+                    long t1 = Stopwatch.GetTimestamp();
 
-                long t2 = Stopwatch.GetTimestamp();
-                SelectionSort.Sort(selection);
-                long t3 = Stopwatch.GetTimestamp();
-
-                selectionTime += (t3 - t2) * nanosecondsPerTick;
-
-                long t4 = Stopwatch.GetTimestamp();
-                InsertionSort.Sort(insertion);
-                long t5 = Stopwatch.GetTimestamp();
-
-                insertionTime += (t5 - t4) * nanosecondsPerTick;
+                    time += (t1 - t0) * nanosecondsPerTick;
+                }
+                Console.WriteLine($"{i}: {time / runAmount}ns");
             }
-
-            Console.WriteLine($"Bubble: {bubbleTime / runAmount}ns");
-            Console.WriteLine($"Selection: {selectionTime / runAmount}ns");
-            Console.WriteLine($"Insertion: {insertionTime / runAmount}ns");
         }
     }
 }
