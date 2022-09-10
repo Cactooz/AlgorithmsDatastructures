@@ -11,13 +11,14 @@ namespace Sorting {
 
             long time = 0;
 
-            for(int i = 100; i < 100000; i*=2) {
+            for(int i = 100; i < 13000; i*=2) {
                 for(int j = 0; j < runAmount; j++) {
                     int[] array = Utilities.RandomArray(i);
 
                     long t0 = Stopwatch.GetTimestamp();
-                    SelectionSort.Sort(array);
+                    //SelectionSort.Sort(array);
                     //InsertionSort.Sort(array);
+                    MergeSort.Sort(array);
                     long t1 = Stopwatch.GetTimestamp();
 
                     time += (t1 - t0) * nanosecondsPerTick;
