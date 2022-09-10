@@ -50,31 +50,20 @@
             //Sort the left and right parts into the temporary array
             while(left <= middle && right <= high) {
                 //Add the left value if it's smaller than the right
-                if(input[left] < input[right]) {
-                    temp[tempIndex] = input[left];
-                    left++;
-                }
+                if(input[left] < input[right])
+                    temp[tempIndex++] = input[left++];
                 //Otherwise add the right value
-                else {
-                    temp[tempIndex] = input[right];
-                    right++;
-                }
-                tempIndex++;
+                else
+                    temp[tempIndex++] = input[right++];
             }
 
             //Add the remaining items from the left part to the temporary array
-            while(left <= middle) {
-                temp[tempIndex] = input[left];
-                left++;
-                tempIndex++;
-            }
+            while(left <= middle)
+                temp[tempIndex++] = input[left++];
 
             //Add the remaining items from the right part to the temporary array
-            while(right <= high) {
-                temp[tempIndex] = input[right];
-                right++;
-                tempIndex++;
-            }
+            while(right <= high)
+                temp[tempIndex++] = input[right++];
 
             //Fill the input array with the values form the temporary array
             for(int i = 0; i < temp.Length; i++)
