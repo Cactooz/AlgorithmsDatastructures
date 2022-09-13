@@ -19,7 +19,6 @@ namespace Benchmark {
         /// <returns>Output formatted for LATEX table or graph, or just a simple print.</returns>
         public static void Average(Func<int[], int[]> BenchmarkMethod, string type, int runAmount, int minSize, int maxSize, int increaseSize) {
             long time = 0;
-            string output = "";
 
             for(int i = minSize; i < maxSize; i *= increaseSize) {
                 for(int j = 0; j < runAmount; j++) {
@@ -32,13 +31,12 @@ namespace Benchmark {
                     time += (t1 - t0) * nanosecondsPerTick;
                 }
                 if(type.ToLower() == "table")
-                    output += $"{i} & {time / runAmount}\\\\\n";
+                    Console.WriteLine($"{i} & {time / runAmount}\\\\\n");
                 else if(type.ToLower() == "graph")
-                    output += $"({i},{time / runAmount})";
+                    Console.Write($"({i},{time / runAmount})");
                 else
                     Console.WriteLine($"{i}: {time / runAmount}ns");
             }
-            Console.WriteLine(output);
         }
 
         /// <summary>
