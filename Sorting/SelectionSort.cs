@@ -17,8 +17,8 @@
                         minIndex = j;
                 }
                 //Swap the numbers if the number is smaller than the current one
-                    if(array[j] < array[i])
-                        Utilities.Swap(ref array[i], ref array[j]);
+                    if(array[minIndex] < array[i])
+                        Utilities.Swap(ref array[i], ref array[minIndex]);
             }
             return array;
         }
