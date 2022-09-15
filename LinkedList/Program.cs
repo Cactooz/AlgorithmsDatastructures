@@ -20,8 +20,12 @@ namespace LinkedList {
                     LinkedList list = GenerateList(i);
                     LinkedList fixedList = GenerateList(1000);
 
+                    //Create a varying and a fixed size array
+                    Arrays array = new Arrays(GenerateArray(i));
+                    Arrays fixedArray = new Arrays(GenerateArray(1000));
+
                     long t0 = Stopwatch.GetTimestamp();
-                    fixedList.Append(list);
+                    array.Append(fixedArray);
                     long t1 = Stopwatch.GetTimestamp();
 
                     //Save only  minimum time

@@ -1,6 +1,7 @@
 ﻿namespace LinkedList {
     internal class Arrays {
         private int[] array;
+        private int length;
 
         /// <summary>
         /// Constructor for Arrays
@@ -8,6 +9,7 @@
         /// <param name="array">The full array with elements</param>
         public Arrays(int[] array) {
             this.array = array;
+            length = array.Length;
         }
 
         /// <summary>
@@ -15,9 +17,9 @@
         /// </summary>
         /// <param name="input">The array to append to the current one.</param>
         /// <returns>A bigger array with both arrays combined.</returns>
-        public int[] Append(int[] input) {
+        public void Append(Arrays input) {
             //Get the combined length of both arrays
-            int length = this.array.Length + input.Length;
+            int length = this.array.Length + input.array.Length;
             int[] array = new int[length];
 
             //Add in both arrays after eachother in the new array
@@ -25,10 +27,10 @@
                 if(i < this.array.Length)
                     array[i] = this.array[i];
                 else
-                    array[i] = input[i];
+                    array[i] = input.array[i - this.length];
             }
 
-            return array;
+            this.array = array;
         }
     }
 }
