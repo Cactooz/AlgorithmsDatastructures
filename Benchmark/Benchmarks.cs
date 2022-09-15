@@ -52,10 +52,10 @@ namespace Benchmark {
         /// <param name="prefix">The output is in nanoseconds, this divides the output by the inputted value.</param>
         /// <returns>Output formatted for LATEX table or graph, or just a simple print.</returns>
         public static void Minimum(Func<int[], int[]> BenchmarkMethod, string type, int runAmount, int minSize, int maxSize, int increaseSize, int prefix) {
-            long minTime = long.MaxValue;
             string output = "";
 
             for(int i = minSize; i < maxSize; i *= increaseSize) {
+                long minTime = long.MaxValue;
                 for(int j = 0; j < runAmount; j++) {
                     int[] array = RandomArray(i);
 
