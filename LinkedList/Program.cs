@@ -33,6 +33,11 @@ namespace LinkedList {
             }
         }
 
+        /// <summary>
+        /// Generate a new <seealso cref="LinkedList"/> with the inputted size.
+        /// </summary>
+        /// <param name="size">The size the new list should be.</param>
+        /// <returns>A new <seealso cref="LinkedList"/>.</returns>
         private static LinkedList GenerateList(int size) {
             LinkedList list = new LinkedList(0, null);
             //Pointer to the list to not change the original list
@@ -45,6 +50,21 @@ namespace LinkedList {
             }
 
             return list;
+        }
+
+        /// <summary>
+        /// Generate a new array with the inputted size.
+        /// </summary>
+        /// <param name="size">The size the new array should be.</param>
+        /// <returns>A new int array.</returns>
+        private static int[] GenerateArray(int size) {
+            int[] array = new int[size];
+
+            //Fill the array with numbers
+            for(int i = 0; i < size; i++)
+                array[i] = i;
+
+            return array;
         }
     }
 }
