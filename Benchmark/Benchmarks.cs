@@ -16,8 +16,9 @@ namespace Benchmark {
         /// <param name="minSize">The minimum size of the array that should be tested.</param>
         /// <param name="maxSize">The maximum size of the array that should be tested.</param>
         /// <param name="increaseSize">What the last size should be multiplied by for the next array size.</param>
+        /// <param name="prefix">The output is in nanoseconds, this divides the output by the inputted value.</param>
         /// <returns>Output formatted for LATEX table or graph, or just a simple print.</returns>
-        public static void Average(Func<int[], int[]> BenchmarkMethod, string type, int runAmount, int minSize, int maxSize, int increaseSize) {
+        public static void Average(Func<int[], int[]> BenchmarkMethod, string type, int runAmount, int minSize, int maxSize, int increaseSize, int prefix) {
             long time = 0;
 
             for(int i = minSize; i < maxSize; i *= increaseSize) {
@@ -31,9 +32,9 @@ namespace Benchmark {
                     time += (t1 - t0) * nanosecondsPerTick;
                 }
                 if(type.ToLower() == "table")
-                    Console.WriteLine($"{i} & {time / runAmount}\\\\\n");
+                    Console.WriteLine($"{i} & {time / runAmount / prefix}\\\\\n");
                 else if(type.ToLower() == "graph")
-                    Console.Write($"({i},{time / runAmount})");
+                    Console.Write($"({i},{time / runAmount / prefix})");
                 else
                     Console.WriteLine($"{i}: {time / runAmount}ns");
             }
@@ -48,9 +49,10 @@ namespace Benchmark {
         /// <param name="minSize">The minimum size of the array that should be tested.</param>
         /// <param name="maxSize">The maximum size of the array that should be tested.</param>
         /// <param name="increaseSize">What the last size should be multiplied by for the next array size.</param>
+        /// <param name="prefix">The output is in nanoseconds, this divides the output by the inputted value.</param>
         /// <returns>Output formatted for LATEX table or graph, or just a simple print.</returns>
-        public static void Minimum(Func<int[], int[]> BenchmarkMethod, string type, int runAmount, int minSize, int maxSize, int increaseSize) {
-            long minTime = 0;
+        public static void Minimum(Func<int[], int[]> BenchmarkMethod, string type, int runAmount, int minSize, int maxSize, int increaseSize, int prefix) {
+            long minTime = long.MaxValue;
             string output = "";
 
             for(int i = minSize; i < maxSize; i *= increaseSize) {
@@ -66,11 +68,11 @@ namespace Benchmark {
                         minTime = time;
                 }
                 if(type.ToLower() == "table")
-                    output += $"{i} & {minTime / runAmount}\\\\\n";
+                    Console.WriteLine($"{i} & {minTime / prefix}\\\\\n");
                 else if(type.ToLower() == "graph")
-                    output += $"({i},{minTime / runAmount})";
+                    Console.Write($"({i},{minTime / prefix})");
                 else
-                    Console.WriteLine($"{i}: {minTime / runAmount}ns");
+                    Console.WriteLine($"{i}: {minTime}ns");
             }
             Console.WriteLine(output);
         }
