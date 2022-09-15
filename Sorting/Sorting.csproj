@@ -7,4 +7,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Include="..\Benchmark\Benchmarks.cs" Link="Benchmarks.cs" />
+  </ItemGroup>
+
 </Project>
