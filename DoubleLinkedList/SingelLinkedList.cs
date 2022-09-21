@@ -51,7 +51,7 @@
             ListElement pointer = list;
 
             //Go to the correct position in the linked list.
-            for(int i = 0; i < pos; i++) {
+            for(int i = 0; i < pos - 1; i++) {
                 //Throw exception if the inputted index is to large.
                 if(pointer.GetNext() == null)
                     throw new IndexOutOfRangeException("Index out of bounds of the linked list.");
@@ -59,19 +59,10 @@
                 pointer = pointer.GetNext();
             }
 
-            //Get the reference to the next element.
-            ListElement next = pointer.GetNext();
             //Save the value of the element getting removed.
-            value = pointer.GetValue();
-            //Move the pointer back to the start.
-            pointer = list;
-
-            //Go to the position before the removed element in the linked list.
-            for(int i = 0; i < pos-1; i++)
-                pointer = pointer.GetNext();
-
-            //Set the next reference to the element after the removed element.
-            pointer.SetNext(next);
+            value = pointer.GetNext().GetValue();
+            //Set the next referece to the element after the removed element.
+            pointer.SetNext(pointer.GetNext().GetNext());
 
             //Return the value of the removed element.
             return value;
