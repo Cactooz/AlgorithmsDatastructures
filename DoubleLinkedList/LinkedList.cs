@@ -93,11 +93,8 @@
         /// </summary>
         /// <param name="position">The position of the element that should be moved.</param>
         public void RemoveAdd(int position) {
-            PrintList();
             int removedValue = Remove(position);
-            PrintList();
             Add(removedValue);
-            PrintList();
         }
 
         /// <summary>
