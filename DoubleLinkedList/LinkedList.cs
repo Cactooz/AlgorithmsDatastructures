@@ -30,16 +30,43 @@
         /// <param name="pos">The position of the element in the list.</param>
         /// <returns>The <see cref="ListElement.value">value</see> of the element that got removed.</returns>
         public int Remove(int pos) {
+            //Throw exception if the inputted index is to small.
+            if(pos < 0)
+                throw new IndexOutOfRangeException("Index out of bounds of the linked list.");
+
+            //Check if it is the first element
+            if(pos == 0) {
+                //Get the value of the current element.
+                int value = list.GetValue();
+                //Move the list to start at the second element.
+                list = list.GetNext();
+                //Remove the reference to the element before.
+                list.SetPrevious(null);
+
+                return value;
+            }
+
             //Set the pointer to the beginning of the linked list.
             ListElement pointer = list;
 
             //Go to the correct position in the linked list.
-            for(int i = 0; i < pos; i++)
-                pointer = pointer.GetNext();
+            for(int i = 0; i < pos; i++) {
+                //Throw exception if the inputted index is to large.
+                if(pointer.GetNext() == null)
+                    throw new IndexOutOfRangeException("Index out of bounds of the linked list.");
 
-            //Remove the references to the surrounding elements.
-            pointer.GetPrevious().SetNext(pointer.GetNext());
-            pointer.GetNext().SetPrevious(pointer.GetPrevious());
+                pointer = pointer.GetNext();
+            }
+
+            //Check if it is the last element
+            if(pointer.GetNext() == null)
+                //Remove the reference on the previous element
+                pointer.GetPrevious().SetNext(null);
+            else {
+                //Remove the references on the surrounding elements.
+                pointer.GetPrevious().SetNext(pointer.GetNext());
+                pointer.GetNext().SetPrevious(pointer.GetPrevious());
+            }
 
             //Return the value of the removed element.
             return pointer.GetValue();
