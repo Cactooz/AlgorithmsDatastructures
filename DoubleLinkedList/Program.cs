@@ -8,19 +8,19 @@ namespace DoubleLinkedList {
             //Prefix for the output to convert from nanoseconds
             int prefix = 1000;
             //Minimum size to test from
-            int minSize = 10;
+            int minSize = 2;
             //The size of the linkedList
-            int maxSize = 50000;
+            int maxSize = 100000;
             //The amount of times to run the tests
             int runAmount = 10000;
             //The amount of removeAdd operations that should be made
-            int removeAddAmount = 1000;
+            int removeAddAmount = 100;
 
             Random random = new Random();
 
             for(int i = minSize; i < maxSize; i *= 2) {
-                long doubleTime = 0;
-                long singleTime = 0;
+                long doubleMinTime = long.MaxValue;
+                long singleMinTime = long.MaxValue;
 
                 //Fill upp the sequence of which elements should be removed and readded.
                 int[] sequence = new int[removeAddAmount];
@@ -39,6 +39,11 @@ namespace DoubleLinkedList {
 
                     long doubleT1 = Stopwatch.GetTimestamp();
 
+                    long doubleTime = doubleT1 - doubleT0;
+
+                    if(doubleTime < doubleMinTime)
+                        doubleMinTime = doubleTime * nanosecondsPerTick;
+
                     long singleT0 = Stopwatch.GetTimestamp();
 
                     for(int k = 0; k < removeAddAmount; k++)
@@ -46,11 +51,12 @@ namespace DoubleLinkedList {
 
                     long singleT1 = Stopwatch.GetTimestamp();
 
+                    long singleTime = singleT1 - singleT0;
 
-                    doubleTime += (doubleT1 - doubleT0) * nanosecondsPerTick;
-                    singleTime += (singleT1 - singleT0) * nanosecondsPerTick;
+                    if(singleTime < singleMinTime)
+                        singleMinTime = singleTime * nanosecondsPerTick;
                 }
-                Console.WriteLine($"{i}: {doubleTime / runAmount / prefix} | {singleTime / runAmount / prefix}");
+                Console.WriteLine($"{i}:\t{doubleMinTime / prefix}\t{singleMinTime / prefix}\t{doubleMinTime / (double)singleMinTime}");
             }
         }
     }
