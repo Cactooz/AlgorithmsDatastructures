@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Benchmark", "Benchmark\Benc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LinkedList", "LinkedList\LinkedList.csproj", "{1264000C-7AA1-49DF-BF08-F1BF3E0A3835}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoubleLinkedList", "DoubleLinkedList\DoubleLinkedList.csproj", "{3CECF347-EF82-4162-AFE4-00F6EC75E3AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DoubleLinkedList", "DoubleLinkedList\DoubleLinkedList.csproj", "{3CECF347-EF82-4162-AFE4-00F6EC75E3AA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trees", "Trees\Trees.csproj", "{6918EA0F-7B2B-427E-9699-3732CD6FD975}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{3CECF347-EF82-4162-AFE4-00F6EC75E3AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3CECF347-EF82-4162-AFE4-00F6EC75E3AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3CECF347-EF82-4162-AFE4-00F6EC75E3AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6918EA0F-7B2B-427E-9699-3732CD6FD975}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6918EA0F-7B2B-427E-9699-3732CD6FD975}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6918EA0F-7B2B-427E-9699-3732CD6FD975}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6918EA0F-7B2B-427E-9699-3732CD6FD975}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
