@@ -147,6 +147,9 @@
         /// Print the whole tree from left to right.
         /// </summary>
         public void Print() {
+            if(root == null)
+                Console.WriteLine("Empty tree");
+            else
             root.Print();
         }
 
