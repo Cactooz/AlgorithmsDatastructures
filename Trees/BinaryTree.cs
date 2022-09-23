@@ -70,6 +70,18 @@
 
         //The root of the binary tree
         private Node root;
+        private int treeSize = 0;
+
+        public BinaryTree() {
+            root = null;
+        }
+
+        public BinaryTree(int size) {
+            Random random = new Random();
+            root = new Node((size / 2) + random.Next(size / 8), 0);
+            while(treeSize < size)
+                Add(random.Next(size), 1);
+        }
 
         /// <summary>
         /// Add a <see cref="Node"/> with <see cref="Node.key">key</see> and <see cref="Node.value">value</see> to the existing tree.
@@ -80,6 +92,7 @@
             //Add a node if the tree is empty
             if(root == null) {
                 root = new Node(key, value);
+                treeSize++;
                 return;
             }
 
@@ -113,10 +126,14 @@
             }
 
             //Set the value right or left.
-            if(key < pointer.GetKey())
+            if(key < pointer.GetKey()) {
                 pointer.SetLeft(new Node(key, value));
-            else
+                treeSize++;
+            }
+            else if(key > pointer.GetKey()) {
                 pointer.SetRight(new Node(key, value));
+                treeSize++;
+            }
         }
 
         /// <summary>
@@ -150,7 +167,7 @@
             if(root == null)
                 Console.WriteLine("Empty tree");
             else
-            root.Print();
+                root.Print();
         }
 
     }
