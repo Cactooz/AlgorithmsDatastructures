@@ -79,6 +79,8 @@
         public BinaryTree(int size) {
             Random random = new Random();
             root = new Node((size / 2) + random.Next(size / 8), 0);
+            treeSize++;
+
             while(treeSize < size)
                 Add(random.Next(size), 1);
         }
@@ -106,7 +108,7 @@
                     break;
                 }
 
-                if(key < root.GetKey()) {
+                if(key < pointer.GetKey()) {
                     //Stop the loop if the left reference does not exist
                     if(pointer.GetLeft() == null)
                         break;
