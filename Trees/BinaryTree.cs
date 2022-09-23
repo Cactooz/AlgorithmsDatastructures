@@ -62,9 +62,17 @@
             public void Print() { 
                 if(left != null) 
                     left.Print();
-                Console.WriteLine($"Key: {key}\tValue: {value}");
+                Console.WriteLine($"Key:\t{key}\tValue: {value}");
                 if(right != null)
                     right.Print();
+            }
+
+            public void PrintString() {
+                if(left != null)
+                    left.PrintString();
+                Console.Write($" {key}");
+                if(right != null)
+                    right.PrintString();
             }
         }
 
@@ -165,11 +173,18 @@
         /// <summary>
         /// Print the whole tree from left to right.
         /// </summary>
-        public void Print() {
+        public void Print(string type = "") {
             if(root == null)
                 Console.WriteLine("Empty tree");
-            else
+            else if(type.ToLower() == "full") {
                 root.Print();
+                Console.WriteLine();
+            }
+            else {
+                Console.Write("{");
+                root.PrintString();
+                Console.WriteLine(" }");
+            }
         }
 
     }
