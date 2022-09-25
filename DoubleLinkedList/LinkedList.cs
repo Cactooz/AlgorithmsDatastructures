@@ -143,6 +143,15 @@
         }
 
         /// <summary>
+        /// Removes element from the <see cref="LinkedList"/> and places it at the start.
+        /// </summary>
+        /// <param name="element">The <see cref="ListElement"/> that should be moved.</param>
+        public void RemoveAdd(ListElement element) {
+            Remove(element);
+            Add(element);
+        }
+
+        /// <summary>
         /// Print the contents of the <see cref="LinkedList"/>.
         /// </summary>
         public void PrintList() {
