@@ -81,6 +81,43 @@
         }
 
         /// <summary>
+        /// Removes a <see cref="ListElement"/> from the list.
+        /// </summary>
+        /// <param name="element">The <see cref="ListElement"/> that should be removed.</param>
+        public void Remove(ListElement element) {
+            //Check if it is the first element
+            if(element.GetPrevious() == null) {
+                //Move the list to start at the second element.
+                list = list.GetNext();
+                //Remove the reference to the element before.
+                list.SetPrevious(null);
+            } else if(element.GetNext() == null)
+                //Remove the reference to the removed element on the previous element.
+                element.GetPrevious().SetNext(null);
+            else {
+                //Remove the references on the surrounding elements.
+                element.GetPrevious().SetNext(element.GetNext());
+                element.GetNext().SetPrevious(element.GetPrevious());
+            }
+
+            //Clear the removed elements next and previous elment refrences.
+            element.SetNext(null);
+            element.SetPrevious(null);
+        }
+
+        /// <summary>
+        /// Add a <see cref="ListElement"/> to the beginning of the linked list.
+        /// </summary>
+        /// <param name="element">The <see cref="ListElement"/> that should be added.</param>
+        public void Add(ListElement element) {
+            //Set the previous ListElement of the current start element.
+            list.SetPrevious(element);
+
+            //Move the start of the linked list back to the newly added element.
+            list = list.GetPrevious();
+        }
+
+        /// <summary>
         /// Add a new <see cref="ListElement"/> to the beginning of the linked list,
         /// with the inputted value.
         /// </summary>
