@@ -5,6 +5,9 @@
         /// </summary>
         private ListElement list;
         /// <summary>
+        /// Optional array for keeping the references to the <see cref="ListElement"/> in the <see cref="list">list</see>.
+        /// </summary>
+        private ListElement[] elementArray;
 
         /// <summary>
         /// Constructor for <see cref="SingleLinkedList"/>.
@@ -62,6 +65,47 @@
         }
 
         /// <summary>
+        /// Removes element from the <see cref="SingleLinkedList"/> and places it at the start.
+        /// </summary>
+        /// <param name="position">The position of the element that should be moved.</param>
+        public void RemoveAdd(int position) {
+            int removedValue = Remove(position);
+            Add(removedValue);
+        }
+
+        /// <summary>
+        /// Removes element from the <see cref="LinkedList"/> and places it at the start.
+        /// </summary>
+        /// <param name="element">The <see cref="ListElement"/> that should be moved.</param>
+        public void RemoveAdd(ListElement element) {
+            Remove(element);
+            Add(element);
+        }
+
+        /// <summary>
+        /// Removes a <see cref="ListElement"/> from the list.
+        /// </summary>
+        /// <param name="element">The <see cref="ListElement"/> that should be removed.</param>
+        public void Remove(ListElement element) {
+            //Check if it is the first element
+            if(element == list)
+                //Move the list to start at the second element.
+                list = list.GetNext();
+
+            //Set the pointer to the beginning of the linked list.
+            ListElement pointer = list;
+
+            //Go to the correct position in the linked list.
+            while(pointer.GetNext() != element)
+                pointer = pointer.GetNext();
+
+            if(element.GetNext() == null)
+                pointer.SetNext(null);
+            else
+                pointer.SetNext(element.GetNext());
+        }
+
+        /// <summary>
         /// Removes a <see cref="ListElement"/> from the specified position.
         /// </summary>
         /// <param name="pos">The position of the element in the list.</param>
@@ -106,22 +150,25 @@
         }
 
         /// <summary>
-        /// Add a new <see cref="ListElement"/> to the beginning of the linked list,
+        /// Add a <see cref="ListElement"/> to the beginning of the <see cref="SingleLinkedList"/>.
+        /// </summary>
+        /// <param name="element">The <see cref="ListElement"/> that should be added.</param>
+        public void Add(ListElement element) {
+            //Set the next ListElement to the old start
+            element.SetNext(list);
+
+            //Move the start of the linked list back to the newly added element.
+            list = element;
+        }
+
+        /// <summary>
+        /// Add a new <see cref="ListElement"/> to the beginning of the <see cref="SingleLinkedList"/>,
         /// with the inputted value.
         /// </summary>
         /// <param name="value">The value that the element should have.</param>
         public void Add(int value) {
             //Add a new ListElement with the inputted value and next reference to current start element.
             list = new ListElement(value, list, null);
-        }
-
-        /// <summary>
-        /// Removes element from the <see cref="SingleLinkedList"/> and places it at the start.
-        /// </summary>
-        /// <param name="position">The position of the element that should be moved.</param>
-        public void RemoveAdd(int position) {
-            int removedValue = Remove(position);
-            Add(removedValue);
         }
 
         /// <summary>
