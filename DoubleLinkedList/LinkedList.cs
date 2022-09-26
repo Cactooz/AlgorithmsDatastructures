@@ -110,6 +110,9 @@
         /// </summary>
         /// <param name="element">The <see cref="ListElement"/> that should be added.</param>
         public void Add(ListElement element) {
+            //Set the next ListElement to the old start
+            element.SetNext(list);
+
             //Set the previous ListElement of the current start element.
             list.SetPrevious(element);
 
