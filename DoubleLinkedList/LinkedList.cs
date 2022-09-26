@@ -168,7 +168,7 @@
             list.SetPrevious(element);
 
             //Move the start of the linked list back to the newly added element.
-            list = list.GetPrevious();
+            list = element;
         }
 
         /// <summary>
