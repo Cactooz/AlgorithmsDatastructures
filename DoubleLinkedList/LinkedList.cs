@@ -174,7 +174,7 @@
         /// Genereate an array with all the <see cref="ListElement"/> in the <see cref="list">list</see>.
         /// </summary>
         /// <param name="size">The size of the array that should be.</param>
-        private void GenerateArray(int size) {
+        public void GenerateArray(int size) {
             //Create an empty array with the size.
             elementArray = new ListElement[size];
 
