@@ -4,6 +4,7 @@
         /// The linked list contaning all the <see cref="ListElement"/>.
         /// </summary>
         private ListElement list;
+        /// <summary>
 
         /// <summary>
         /// Constructor for <see cref="SingleLinkedList"/>.
@@ -11,7 +12,12 @@
         /// with each <see cref="ListElement"/> value getting incremented by one each time.
         /// </summary>
         /// <param name="size">The amount of elements that should be in the list.</param>
-        public SingleLinkedList(int size) {
+        public SingleLinkedList(int size, bool array = false) {
+            //The list has to have elements
+            if(size < 0)
+                return;
+
+            //Create root ListElemenet
             list = new ListElement(0, null, null);
 
             //Pointer to the list to not change the original list
@@ -20,6 +26,37 @@
             //Loop through and add next references to create the list with the size
             for(int i = 0; i < size - 1; i++) {
                 pointer.SetNext(new ListElement(i + 1, null, null));
+                pointer = pointer.GetNext();
+            }
+
+            //Fill an array with the node references
+            if(array && size > 0)
+                GenerateArray(size);
+        }
+
+        /// <summary>
+        /// Get the <see cref="ListElement"/> reference from the list using the array.
+        /// The array is created by the constructor if the <c>bool array = true</c>.
+        /// </summary>
+        /// <param name="position">The position in the array.</param>
+        /// <returns>A <see cref="ListElement"/> from the inputted position.</returns>
+        public ListElement GetNode(int position) => elementArray[position];
+
+        /// <summary>
+        /// Genereate an array with all the <see cref="ListElement"/> in the <see cref="list">list</see>.
+        /// </summary>
+        /// <param name="size">The size of the array that should be.</param>
+        public void GenerateArray(int size) {
+            //Create an empty array with the size.
+            elementArray = new ListElement[size];
+
+            //Set the pointer to the beginning of the linked list.
+            ListElement pointer = list;
+            int i = 0;
+
+            //Add all the element from the list into the array.
+            while(pointer != null) {
+                elementArray[i++] = pointer;
                 pointer = pointer.GetNext();
             }
         }
