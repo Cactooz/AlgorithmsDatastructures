@@ -87,10 +87,15 @@
         /// </summary>
         /// <param name="element">The <see cref="ListElement"/> that should be removed.</param>
         public void Remove(ListElement element) {
-            //Check if it is the first element
-            if(element == list)
+            //Check if it is the first element.
+            if(element == list) {
                 //Move the list to start at the second element.
                 list = list.GetNext();
+
+                //Clear the next reference of the element.
+                element.SetNext(null);
+                return;
+            }
 
             //Set the pointer to the beginning of the linked list.
             ListElement pointer = list;
@@ -99,10 +104,14 @@
             while(pointer.GetNext() != element)
                 pointer = pointer.GetNext();
 
+            //If the next element is null, set pointer next to null.
             if(element.GetNext() == null)
                 pointer.SetNext(null);
             else
                 pointer.SetNext(element.GetNext());
+
+            //Clear the next reference for the element.
+            element.SetNext(null);
         }
 
         /// <summary>
