@@ -4,6 +4,9 @@
         /// The linked list contaning all the <see cref="ListElement"/>.
         /// </summary>
         private ListElement list;
+        /// <summary>
+        /// Optional array for keeping the references to the <see cref="ListElement"/> in the <see cref="list">list</see>.
+        /// </summary>
         private ListElement[] elementArray;
 
         /// <summary>
@@ -13,9 +16,11 @@
         /// </summary>
         /// <param name="size">The amount of elements that should be in the list.</param>
         public LinkedList(int size, bool array = false) {
+            //The list has to have elements
             if(size < 0)
                 return;
 
+            //Create root ListElemenet
             list = new ListElement(0, null, null);
 
             //Pointer to the list to not change the original list
@@ -30,6 +35,77 @@
             //Fill an array with the node references
             if(array && size > 0)
                 GenerateArray(size);
+        }
+
+        /// <summary>
+        /// Get the <see cref="ListElement"/> reference from the list using the array.
+        /// The array is created by the constructor if the <c>bool array = true</c>.
+        /// </summary>
+        /// <param name="position">The position in the array.</param>
+        /// <returns>A <see cref="ListElement"/> from the inputted position.</returns>
+        public ListElement GetNode(int position) => elementArray[position];
+
+        /// <summary>
+        /// Genereate an array with all the <see cref="ListElement"/> in the <see cref="list">list</see>.
+        /// </summary>
+        /// <param name="size">The size of the array that should be.</param>
+        public void GenerateArray(int size) {
+            //Create an empty array with the size.
+            elementArray = new ListElement[size];
+
+            //Set the pointer to the beginning of the linked list.
+            ListElement pointer = list;
+            int i = 0;
+
+            //Add all the element from the list into the array.
+            while(pointer != null) {
+                elementArray[i++] = pointer;
+                pointer = pointer.GetNext();
+            }
+        }
+
+        /// <summary>
+        /// Removes element from the <see cref="LinkedList"/> and places it at the start.
+        /// </summary>
+        /// <param name="element">The <see cref="ListElement"/> that should be moved.</param>
+        public void RemoveAdd(ListElement element) {
+            Remove(element);
+            Add(element);
+        }
+
+        /// <summary>
+        /// Removes element from the <see cref="LinkedList"/> and places it at the start.
+        /// </summary>
+        /// <param name="position">The position of the element that should be moved.</param>
+        public void RemoveAdd(int position) {
+            int removedValue = Remove(position);
+            Add(removedValue);
+        }
+
+        /// <summary>
+        /// Removes a <see cref="ListElement"/> from the list.
+        /// </summary>
+        /// <param name="element">The <see cref="ListElement"/> that should be removed.</param>
+        public void Remove(ListElement element) {
+            //Check if it is the first element
+            if(element.GetPrevious() == null) {
+                //Move the list to start at the second element.
+                list = list.GetNext();
+                //Remove the reference to the element before.
+                list.SetPrevious(null);
+            }
+            else if(element.GetNext() == null)
+                //Remove the reference to the removed element on the previous element.
+                element.GetPrevious().SetNext(null);
+            else {
+                //Remove the references on the surrounding elements.
+                element.GetPrevious().SetNext(element.GetNext());
+                element.GetNext().SetPrevious(element.GetPrevious());
+            }
+
+            //Clear the removed elements next and previous elment refrences.
+            element.SetNext(null);
+            element.SetPrevious(null);
         }
 
         /// <summary>
@@ -81,32 +157,7 @@
         }
 
         /// <summary>
-        /// Removes a <see cref="ListElement"/> from the list.
-        /// </summary>
-        /// <param name="element">The <see cref="ListElement"/> that should be removed.</param>
-        public void Remove(ListElement element) {
-            //Check if it is the first element
-            if(element.GetPrevious() == null) {
-                //Move the list to start at the second element.
-                list = list.GetNext();
-                //Remove the reference to the element before.
-                list.SetPrevious(null);
-            } else if(element.GetNext() == null)
-                //Remove the reference to the removed element on the previous element.
-                element.GetPrevious().SetNext(null);
-            else {
-                //Remove the references on the surrounding elements.
-                element.GetPrevious().SetNext(element.GetNext());
-                element.GetNext().SetPrevious(element.GetPrevious());
-            }
-
-            //Clear the removed elements next and previous elment refrences.
-            element.SetNext(null);
-            element.SetPrevious(null);
-        }
-
-        /// <summary>
-        /// Add a <see cref="ListElement"/> to the beginning of the linked list.
+        /// Add a <see cref="ListElement"/> to the beginning of the <see cref="LinkedList"/>.
         /// </summary>
         /// <param name="element">The <see cref="ListElement"/> that should be added.</param>
         public void Add(ListElement element) {
@@ -121,7 +172,7 @@
         }
 
         /// <summary>
-        /// Add a new <see cref="ListElement"/> to the beginning of the linked list,
+        /// Add a new <see cref="ListElement"/> to the beginning of the <see cref="LinkedList"/>,
         /// with the inputted value.
         /// </summary>
         /// <param name="value">The value that the element should have.</param>
@@ -134,24 +185,6 @@
 
             //Move the start of the linked list back to the newly added element.
             list = list.GetPrevious();
-        }
-
-        /// <summary>
-        /// Removes element from the <see cref="LinkedList"/> and places it at the start.
-        /// </summary>
-        /// <param name="position">The position of the element that should be moved.</param>
-        public void RemoveAdd(int position) {
-            int removedValue = Remove(position);
-            Add(removedValue);
-        }
-
-        /// <summary>
-        /// Removes element from the <see cref="LinkedList"/> and places it at the start.
-        /// </summary>
-        /// <param name="element">The <see cref="ListElement"/> that should be moved.</param>
-        public void RemoveAdd(ListElement element) {
-            Remove(element);
-            Add(element);
         }
 
         /// <summary>
@@ -168,35 +201,6 @@
                 Console.Write($", {pointer.GetValue()}");
             }
             Console.WriteLine(" }");
-        }
-
-        /// <summary>
-        /// Genereate an array with all the <see cref="ListElement"/> in the <see cref="list">list</see>.
-        /// </summary>
-        /// <param name="size">The size of the array that should be.</param>
-        public void GenerateArray(int size) {
-            //Create an empty array with the size.
-            elementArray = new ListElement[size];
-
-            //Set the pointer to the beginning of the linked list.
-            ListElement pointer = list;
-            int i = 0;
-
-            //Add all the element from the list into the array.
-            while(pointer != null) {
-                elementArray[i++] = pointer;
-                pointer = pointer.GetNext();
-            }
-        }
-
-        /// <summary>
-        /// Get the <see cref="ListElement"/> reference from the list using the array.
-        /// The array is created by the constructor if the <c>bool array = true</c>.
-        /// </summary>
-        /// <param name="position">The position in the array.</param>
-        /// <returns>A <see cref="ListElement"/> from the inputted position.</returns>
-        public ListElement GetNode(int position) {
-            return elementArray[position];
         }
 
     }
