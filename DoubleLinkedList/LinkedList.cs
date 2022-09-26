@@ -68,7 +68,7 @@
         /// Removes element from the <see cref="LinkedList"/> and places it at the start.
         /// </summary>
         /// <param name="element">The <see cref="ListElement"/> that should be moved.</param>
-        public void RemoveAdd(ListElement element) {
+        public void MoveToStart(ListElement element) {
             Remove(element);
             Add(element);
         }
@@ -77,7 +77,7 @@
         /// Removes element from the <see cref="LinkedList"/> and places it at the start.
         /// </summary>
         /// <param name="position">The position of the element that should be moved.</param>
-        public void RemoveAdd(int position) {
+        public void MoveToStart(int position) {
             int removedValue = Remove(position);
             Add(removedValue);
         }
