@@ -1,7 +1,7 @@
 ﻿namespace DoubleLinkedList {
     internal class LinkedList {
         /// <summary>
-        /// The linked list contaning all the <see cref="ListElement"/>.
+        /// The linked list containing all the <see cref="ListElement"/>.
         /// </summary>
         private ListElement list;
         /// <summary>
@@ -46,7 +46,7 @@
         public ListElement GetNode(int position) => elementArray[position];
 
         /// <summary>
-        /// Genereate an array with all the <see cref="ListElement"/> in the <see cref="list">list</see>.
+        /// Generate an array with all the <see cref="ListElement"/> in the <see cref="list">list</see>.
         /// </summary>
         /// <param name="size">The size of the array that should be.</param>
         public void GenerateArray(int size) {
@@ -103,7 +103,7 @@
                 element.GetNext().SetPrevious(element.GetPrevious());
             }
 
-            //Clear the removed elements next and previous elment refrences.
+            //Clear the removed elements next and previous element references.
             element.SetNext(null);
             element.SetPrevious(null);
         }

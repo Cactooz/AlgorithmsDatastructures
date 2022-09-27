@@ -1,7 +1,7 @@
 ﻿namespace DoubleLinkedList {
     internal class SingleLinkedList {
         /// <summary>
-        /// The linked list contaning all the <see cref="ListElement"/>.
+        /// The linked list containing all the <see cref="ListElement"/>.
         /// </summary>
         private ListElement list;
         /// <summary>
@@ -46,7 +46,7 @@
         public ListElement GetNode(int position) => elementArray[position];
 
         /// <summary>
-        /// Genereate an array with all the <see cref="ListElement"/> in the <see cref="list">list</see>.
+        /// Generate an array with all the <see cref="ListElement"/> in the <see cref="list">list</see>.
         /// </summary>
         /// <param name="size">The size of the array that should be.</param>
         public void GenerateArray(int size) {
@@ -151,7 +151,7 @@
 
             //Save the value of the element getting removed.
             value = pointer.GetNext().GetValue();
-            //Set the next referece to the element after the removed element.
+            //Set the next reference to the element after the removed element.
             pointer.SetNext(pointer.GetNext().GetNext());
 
             //Return the value of the removed element.

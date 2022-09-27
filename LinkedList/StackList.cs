@@ -53,7 +53,7 @@
                 //Get the value of the first element.
                 value = stackPointer.GetValue();
 
-                //Unreference both the stack and stackPointer.
+                //Unreferencing both the stack and stackPointer.
                 stack = null;
                 stackPointer = null;
             }

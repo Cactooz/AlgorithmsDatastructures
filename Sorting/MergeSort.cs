@@ -43,7 +43,7 @@
             //Index for the right part
             int right = middle + 1;
 
-            //New teporary array
+            //New temporary array
             int[] temp = new int[(high - low) + 1];
             int tempIndex = 0;
 

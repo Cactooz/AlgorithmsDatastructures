@@ -82,7 +82,7 @@ class Introduction {
     /// Sums up numbers in an array from random positions in the array.
     /// </summary>
     /// <param name="n">The size of the index array</param>
-    /// <param name="rngFirst">Desides if the random numbers should be generated on the fly
+    /// <param name="rngFirst">Decides if the random numbers should be generated on the fly
     /// or if there are an index array where there random positions are already generated.</param>
     private static double RandomArraySum(int n, bool rngFirst) {
 
@@ -104,14 +104,14 @@ class Introduction {
 
             t0 = Stopwatch.GetTimestamp();
 
-            //Sum the numbers togheter from index positions
+            //Sum the numbers together from index positions
             for(int i = 0; i < n; i++) {
                 sum += array[index[i]];
             }
         } else {
             t0 = Stopwatch.GetTimestamp();
 
-            //Sum the numbers togheter from random positions
+            //Sum the numbers together from random positions
             for(int i = 0; i < n; i++) {
                 sum += array[rand.NextInt64(n)];
             }
@@ -193,7 +193,7 @@ class Introduction {
             int sum = 0;
             long t0 = Stopwatch.GetTimestamp();
 
-            //Search for the keys in the array and sum them togheter
+            //Search for the keys in the array and sum them together
             for(int ki = 0; ki < m; ki++) {
                 int key = keys[ki];
                 for(int j = 0; j < n; j++) {
@@ -236,7 +236,7 @@ class Introduction {
             int sum = 0;
             long t0 = Stopwatch.GetTimestamp();
 
-            //Search for the keys in the array and sum them togheter
+            //Search for the keys in the array and sum them together
             for(int ki = 0; ki < m; ki++) {
                 int key = keys[ki];
                 for(int j = 0; j < n; j++) {

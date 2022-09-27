@@ -18,7 +18,7 @@
             /// <summary>
             /// Get the <see cref="Node.key">key</see> of the node.
             /// </summary>
-            /// <returns>The key as interger.</returns>
+            /// <returns>The key as integer.</returns>
             public int GetKey() => key;
             /// <summary>
             /// Set the <see cref="Node.key">key</see> value.
@@ -28,7 +28,7 @@
             /// <summary>
             /// Get the <see cref="Node.value">value</see> of the node.
             /// </summary>
-            /// <returns>The value as interger.</returns>
+            /// <returns>The value as integer.</returns>
             public int GetValue() => value;
             /// <summary>
             /// Set the <see cref="Node.value">value</see> of the node.
@@ -57,7 +57,7 @@
             public void SetRight(Node node) => right = node;
 
             /// <summary>
-            /// Print the <see cref="Node.value">values</see> of all elements in the tree, recrusive.
+            /// Print the <see cref="Node.value">values</see> of all elements in the tree, recursive.
             /// </summary>
             public void Print() { 
                 if(left != null) 

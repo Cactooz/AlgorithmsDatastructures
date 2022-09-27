@@ -96,7 +96,7 @@ public class Calculator {
     private DynamicStack stack;
 
     /// <summary>
-    /// Construcor for <c>Calculator</c>
+    /// Constructor for <c>Calculator</c>
     /// </summary>
     /// <param name="expr">The expression the calculator should use</param>
     public Calculator(Item[] expressions) {

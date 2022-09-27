@@ -22,7 +22,7 @@
             int length = this.array.Length + input.array.Length;
             int[] array = new int[length];
 
-            //Add in both arrays after eachother in the new array
+            //Add in both arrays after each other in the new array
             for(int i = 0; i < length; i++) {
                 if(i < this.array.Length)
                     array[i] = this.array[i];

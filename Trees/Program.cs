@@ -25,6 +25,7 @@ namespace Trees {
                 int[] array = ArrayFillSorted(new int[i]);
 
                 for(int j = 0; j < runAmount; j++) {
+                    //Tree lookup
                     int key = random.Next((i * 2) + 1);
 
                     long treeT0 = Stopwatch.GetTimestamp();
@@ -33,14 +34,17 @@ namespace Trees {
 
                     long treeT1 = Stopwatch.GetTimestamp();
 
+                    //Add the time to the total time for the tree lookup
                     treeTime += (treeT1 - treeT0) * nanosecondsPerTick;
 
+                    //Normal array with binary search
                     long arrayT0 = Stopwatch.GetTimestamp();
 
                     BinarySearch(array, key);
 
                     long arrayT1 = Stopwatch.GetTimestamp();
 
+                    //Add the time to the total time for the binary search
                     arrayTime += (arrayT1 - arrayT0) * nanosecondsPerTick;
                 }
                 Console.WriteLine($"{i}:\t{treeTime / runAmount}\t{arrayTime / runAmount}");
@@ -55,6 +59,7 @@ namespace Trees {
         private static int[] ArrayFillSorted(int[] array) {
             Random random = new Random();
             int next = 0;
+            //Fill the array with larger and larger values
             for(int i = 0; i < array.Length; i++) {
                 next += random.Next(6) + 1;
                 array[i] = next;

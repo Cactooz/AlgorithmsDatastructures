@@ -1,7 +1,7 @@
 ﻿namespace Sorting {
     class Utilities {
         /// <summary>
-        /// Swaps the two inputed numbers with eachother.
+        /// Swaps the two inputed numbers with each other.
         /// </summary>
         public static void Swap(ref int a, ref int b) {
             int temp = a;
@@ -17,6 +17,7 @@
         public static int[] RandomArray(int size) {
             Random random = new Random();
             int[] array = new int[size];
+            //Fill the array with random values
             for(int i = 0; i < array.Length; i++)
                 array[i] = random.Next(array.Length*5);
             return array;
