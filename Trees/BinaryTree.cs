@@ -151,13 +151,13 @@
         /// </summary>
         /// <param name="key">The key to find.</param>
         /// <returns>The <see cref="Node.value"/> if found, otherwise <c>null</c>.</returns>
-        public string Lookup(int key) {
+        public int? Lookup(int key) {
             Node pointer = root;
 
             while(pointer != null) {
                 //Return the value if found
                 if(pointer.GetKey() == key)
-                    return pointer.GetValue().ToString();
+                    return pointer.GetValue();
 
                 //Go left if key is smaller otherwise right
                 if(key < pointer.GetKey())
@@ -167,7 +167,7 @@
             }
 
             //Return null if not found
-            return "null";
+            return null;
         }
 
         /// <summary>
