@@ -86,7 +86,7 @@
 
         public BinaryTree(int size) {
             Random random = new Random();
-            root = new Node(random.Next(size * 2 - size / 4, size * 2 + size / 4), 0);
+            root = new Node(random.Next((size * 7) / 4, (size * 9) / 4), 0);
             treeSize++;
 
             while(treeSize < size)
