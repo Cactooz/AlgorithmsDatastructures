@@ -51,6 +51,11 @@
         private Node list;
 
         /// <summary>
+        /// The total length of the <see cref="LinkedList"/>
+        /// </summary>
+        private readonly int length;
+
+        /// <summary>
         /// Constructor for <see cref="LinkedList"/>.
         /// Creates a new <see cref="LinkedList"/> with the inputted size, 
         /// with each <see cref="Node"/> having a random <see cref="Node.value">value</see>.
@@ -74,6 +79,26 @@
                 pointer.SetNext(new Node(random.Next(size*4), null));
                 pointer = pointer.GetNext();
             }
+
+            length = size;
+        }
+
+        /// <summary>
+        /// Get the <see cref="length">length</see> of the <see cref="LinkedList"/>.
+        /// </summary>
+        /// <returns>The <see cref="length">length</see> of the <see cref="LinkedList"/> as int.</returns>
+        public int GetLength() => length;
+
+        /// <summary>
+        /// Get the last <see cref="Node"/> of the <see cref="LinkedList"/>.
+        /// </summary>
+        /// <returns>A reference to the last <see cref="Node"/>.</returns>
+        public Node GetLast() {
+            Node pointer = list;
+            while(pointer.GetNext() != null)
+                pointer = pointer.GetNext();
+
+            return pointer;
         }
 
         /// <summary>
