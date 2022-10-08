@@ -114,20 +114,32 @@
         /// <param name="first">The <see cref="Node"/> before the first <see cref="Node"/> that should be swapped.</param>
         /// <param name="second">The <see cref="Node"/> before the second <see cref="Node"/> that should be swapped.</param>
         public void Swap(Node first, Node second) {
-            //The actual Nodes that should be swapped
-            Node swap1 = first.GetNext();
+            //The actual first node that should be swapped
+            Node swap1;
+            //Use the first node in the list if inputted first is null
+            if(first == null)
+                swap1 = list;
+            else
+                swap1 = first.GetNext();
+
+            //The actual second node that should be swapped
             Node swap2 = second.GetNext();
             //The Node after the second swapping Node
             Node after2 = swap2.GetNext();
 
             //Set the second to point at the swap1
             second.SetNext(swap1);
-            //Set the first to point at swap2
-            first.SetNext(swap2);
             //Set swap2 to point at the node after swap1
             swap2.SetNext(swap1.GetNext());
             //Set swap1 to point at after2 which was the node after swap2
             swap1.SetNext(after2);
+
+            if(first == null)
+                //Set the swap2 node to be the first node in the list
+                list = swap2;
+            else
+                //Set the first to point at swap2
+                first.SetNext(swap2);
         }
 
         /// <summary>
