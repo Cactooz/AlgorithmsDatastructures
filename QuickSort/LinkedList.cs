@@ -102,6 +102,12 @@
         }
 
         /// <summary>
+        /// Return the first <see cref="Node"/> in the <see cref="LinkedList"/>.
+        /// </summary>
+        /// <returns>A reference to the first <see cref="Node"/>.</returns>
+        public Node GetNode() => list;
+
+        /// <summary>
         /// Swaps two <see cref="Node"/>s in the <see cref="LinkedList"/>.
         /// It uses the two previous nodes in order to not having to loop through the <see cref="LinkedList"/>.
         /// </summary>
