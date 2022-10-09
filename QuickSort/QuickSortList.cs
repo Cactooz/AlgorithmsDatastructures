@@ -73,15 +73,18 @@
                 if(jNode.GetValue() <= pivot) {
                     list.Swap(lowNode, jNode);
                     lowIndex++;
-                    lowNode = lowNode.GetNext();
+                    if(lowNode != null)
+                        lowNode = lowNode.GetNext();
                 }
                 //Move to the next node
                 jNode = jNode.GetNext();
                 j++;
             }
 
+            if(lowNode != null)
+                lowNode = lowNode.GetNext();
+
             //Swap the pivot into the middle
-            lowNode = lowNode.GetNext();
             list.Swap(lowNode, pivotNode);
 
             return lowIndex + 1;

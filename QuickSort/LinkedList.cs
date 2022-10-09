@@ -124,13 +124,17 @@
 
             //The actual second node that should be swapped
             Node swap2 = second.GetNext();
+            Node after2 = null;
+
             //The Node after the second swapping Node
-            Node after2 = swap2.GetNext();
+            if(swap2 != null)
+                after2 = swap2.GetNext();
 
             //Set the second to point at the swap1
             second.SetNext(swap1);
             //Set swap2 to point at the node after swap1
-            swap2.SetNext(swap1.GetNext());
+            if(swap2 != null)
+                swap2.SetNext(swap1.GetNext());
             //Set swap1 to point at after2 which was the node after swap2
             swap1.SetNext(after2);
 
