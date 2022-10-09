@@ -1,5 +1,6 @@
 ﻿namespace QuickSort {
     internal class QuickSortList {
+
         /// <summary>
         /// Starting point of <see cref="QuickSortList"/>.
         /// Sends in the <paramref name="list"/> and sorts it.
@@ -8,86 +9,88 @@
         /// <returns>The sorted <paramref name="list"/>.</returns>
         public LinkedList SortStart(LinkedList list) {
             //Sort the whole list
-            Sort(list, 0, list.GetLength());
-            //Return the sorted list
+            Sort(list.GetNode(), list.GetLast());
+
             return list;
         }
 
         /// <summary>
-        /// Sort the <paramref name="list"/>.
         /// Sorts higher and lower around the <paramref name="high"/> element using <see cref="Partition"/>.
         /// Splits up recursively around the <paramref name="high"/> and <see cref="Sort"/> the lower and higher parts.
         /// </summary>
-        /// <param name="list">The int <see cref="LinkedList"/> to be sorted.</param>
-        /// <param name="low">The lowest position where the array sort should start.</param>
-        /// <param name="high">The highest position where the array sort should end.</param>
-        private void Sort(LinkedList list, int low, int high) {
-            if(low < high) {
-                int partIndex = Partition(list, low, high);
+        /// <param name="low">The lowest <see cref="LinkedList.Node">Node</see> where the <see cref="LinkedList"/> <see cref="Sort">Sort</see> should start.</param>
+        /// <param name="high">The highest <see cref="LinkedList.Node">Node</see> where the <see cref="LinkedList"/> <see cref="Sort">Sort</see> should end.</param>
+        private void Sort(LinkedList.Node low, LinkedList.Node high) {
+            //Return directly if any of the inputted nodes are null or the same node
+            if(low == null || high == null || low == high)
+                return;
 
-                //Sort the lower part of the list
-                Sort(list, low, partIndex - 1);
-                //Sort the upper part of the list
-                Sort(list, partIndex + 1, high);
-            }
+            //Do the first partition for the full list
+            LinkedList.Node partIndex = Partition(low, high);
+
+            //Sort the lower parts of the list
+            Sort(low, partIndex);
+
+            //Sort the higher parts of the array
+            if(partIndex != null && partIndex == low)
+                Sort(partIndex.GetNext(), high);
+            else if(partIndex != null && partIndex.GetNext() != null)
+                Sort(partIndex.GetNext().GetNext(), high);
         }
 
         /// <summary>
-        /// Sets the <paramref name="high"/> value as the <c>pivot</c> and sorts all other <paramref name="list"/> 
+        /// Sets the <paramref name="high"/> value as the <c>pivot</c> and sorts all other list 
         /// elements from <paramref name="low"/> and up around it.
         /// Resulting in the <c>pivot</c> element having smaller elements before it and larger after it.
         /// </summary>
-        /// <param name="list">The int <see cref="LinkedList"/> to be sorted.</param>
-        /// <param name="low">The lowest position where the array sort should start.</param>
-        /// <param name="high">The highest position where the array sort should end.</param>
-        /// <returns>The location of the next pivot, in the middle where
+        /// <param name="low">The lowest position where the <see cref="LinkedList"/> <see cref="Sort">sort</see> should start.</param>
+        /// <param name="high">The highest position where the <see cref="LinkedList"/> <see cref="Sort">sort</see> should end.</param>
+        /// <returns>The <see cref="LinkedList.Node"/> pointing at the used pivot, in the middle where
         /// all lower elements are smaller and all higher elements are larger.</returns>
-        private int Partition(LinkedList list, int low, int high) {
-            //Create a pointer to the list
-            LinkedList.Node pointer = list.GetNode();
-
-            //Loop through to the pivot node
-            for(int i = 0; i < high - 1; i++)
-                pointer.GetNext();
+        private LinkedList.Node Partition(LinkedList.Node low, LinkedList.Node high) {
+            if(low == null || high == null || low == high)
+                return low;
 
             //Set the pivot to the last list node value
-            int pivot = pointer.GetNext().GetValue();
-            //Save the reference to the second last list node
-            //The node before the pivot node
-            LinkedList.Node pivotNode = pointer;
+            int pivot = high.GetValue();
 
-            //Loop through to the lowest node
-            LinkedList.Node lowNode = list.GetNode();
-            for(int i = 0; i < low - 1; i++)
-                lowNode.GetNext();
+            //The node that end up pointing at the pivot node
+            LinkedList.Node pivotNode = low;
+            //The actual node that the checks are done on
+            LinkedList.Node current = low;
 
-            //Get the node to check the value for
-            LinkedList.Node jNode = lowNode.GetNext();
+            //Temp int for swapping the node values
+            int temp;
 
-            int lowIndex = low - 1;
-            int j = low;
+            //The next value of the lowest position
+            LinkedList.Node next = low.GetNext();
 
             //Move the smaller items to the start
-            while(jNode != null && j < high) {
-                //Check if the list value is smaller than pivot
-                if(jNode.GetValue() <= pivot) {
-                    list.Swap(lowNode, jNode);
-                    lowIndex++;
-                    if(lowNode != null)
-                        lowNode = lowNode.GetNext();
+            while(low != high && next != null) {
+                if(low.GetValue() < pivot) {
+                    //Move the pivot forward
+                    pivotNode = current;
+
+                    //Swap the node values
+                    temp = current.GetValue();
+                    current.SetValue(low.GetValue());
+                    low.SetValue(temp);
+
+                    //Move the next node to swap check with
+                    current = current.GetNext();
                 }
                 //Move to the next node
-                jNode = jNode.GetNext();
-                j++;
+                low = low.GetNext();
+                next = low;
             }
 
-            if(lowNode != null)
-                lowNode = lowNode.GetNext();
-
             //Swap the pivot into the middle
-            list.Swap(lowNode, pivotNode);
+            temp = current.GetValue();
+            current.SetValue(pivot);
+            high.SetValue(temp);
 
-            return lowIndex + 1;
+            //Return the node pointing at the current pivot
+            return pivotNode;
         }
 
     }

@@ -9,7 +9,7 @@
             /// </summary>
             private int value;
             /// <summary>
-            /// A reference to the next <see cref="Node"/>.
+            /// A <see cref="Nullable"/> reference to the next <see cref="Node"/>.
             /// </summary>
             private Node? next;
 
@@ -17,7 +17,7 @@
             /// Constructor for node, without a <see cref="Node.next">next</see> reference.
             /// </summary>
             /// <param name="value">The <see cref="value">value</see> of the <see cref="Node"/>.</param>
-            /// <param name="next">A reference to the <see cref="next">next</see> <see cref="Node"/>.</param>
+            /// <param name="next">A <see cref="Nullable"/> reference to the <see cref="next">next</see> <see cref="Node"/>.</param>
             public Node(int value, Node? next) {
                 this.value = value;
                 this.next = next;
@@ -47,13 +47,9 @@
 
         /// <summary>
         /// The linked list containing all <see cref="Node"/>s.
+        /// Points at the first element.
         /// </summary>
         private Node list;
-
-        /// <summary>
-        /// The total length of the <see cref="LinkedList"/>
-        /// </summary>
-        private readonly int length;
 
         /// <summary>
         /// Constructor for <see cref="LinkedList"/>.
@@ -79,15 +75,13 @@
                 pointer.SetNext(new Node(random.Next(size*4), null));
                 pointer = pointer.GetNext();
             }
-
-            length = size;
         }
 
         /// <summary>
-        /// Get the <see cref="length">length</see> of the <see cref="LinkedList"/>.
+        /// Return the first <see cref="Node"/> in the <see cref="LinkedList"/>.
         /// </summary>
-        /// <returns>The <see cref="length">length</see> of the <see cref="LinkedList"/> as int.</returns>
-        public int GetLength() => length;
+        /// <returns>A reference to the first <see cref="Node"/>.</returns>
+        public Node GetNode() => list;
 
         /// <summary>
         /// Get the last <see cref="Node"/> of the <see cref="LinkedList"/>.
@@ -99,51 +93,6 @@
                 pointer = pointer.GetNext();
 
             return pointer;
-        }
-
-        /// <summary>
-        /// Return the first <see cref="Node"/> in the <see cref="LinkedList"/>.
-        /// </summary>
-        /// <returns>A reference to the first <see cref="Node"/>.</returns>
-        public Node GetNode() => list;
-
-        /// <summary>
-        /// Swaps two <see cref="Node"/>s in the <see cref="LinkedList"/>.
-        /// It uses the two previous nodes in order to not having to loop through the <see cref="LinkedList"/>.
-        /// </summary>
-        /// <param name="first">The <see cref="Node"/> before the first <see cref="Node"/> that should be swapped.</param>
-        /// <param name="second">The <see cref="Node"/> before the second <see cref="Node"/> that should be swapped.</param>
-        public void Swap(Node first, Node second) {
-            //The actual first node that should be swapped
-            Node swap1;
-            //Use the first node in the list if inputted first is null
-            if(first == null)
-                swap1 = list;
-            else
-                swap1 = first.GetNext();
-
-            //The actual second node that should be swapped
-            Node swap2 = second.GetNext();
-            Node after2 = null;
-
-            //The Node after the second swapping Node
-            if(swap2 != null)
-                after2 = swap2.GetNext();
-
-            //Set the second to point at the swap1
-            second.SetNext(swap1);
-            //Set swap2 to point at the node after swap1
-            if(swap2 != null)
-                swap2.SetNext(swap1.GetNext());
-            //Set swap1 to point at after2 which was the node after swap2
-            swap1.SetNext(after2);
-
-            if(first == null)
-                //Set the swap2 node to be the first node in the list
-                list = swap2;
-            else
-                //Set the first to point at swap2
-                first.SetNext(swap2);
         }
 
         /// <summary>
