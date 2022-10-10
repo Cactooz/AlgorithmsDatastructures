@@ -34,7 +34,7 @@
             //Sort the higher parts of the array
             if(partIndex != null && partIndex == low)
                 Sort(partIndex.GetNext(), high);
-            else if(partIndex != null && partIndex.GetNext() != null)
+            else if(partIndex != null && partIndex.GetNext() != null && partIndex.GetNext() != high)
                 Sort(partIndex.GetNext().GetNext(), high);
         }
 
@@ -62,11 +62,8 @@
             //Temp int for swapping the node values
             int temp;
 
-            //The next value of the lowest position
-            LinkedList.Node next = low.GetNext();
-
             //Move the smaller items to the start
-            while(low != high && next != null) {
+            while(low != high) {
                 if(low.GetValue() < pivot) {
                     //Move the pivot forward
                     pivotNode = current;
@@ -81,7 +78,6 @@
                 }
                 //Move to the next node
                 low = low.GetNext();
-                next = low;
             }
 
             //Swap the pivot into the middle
