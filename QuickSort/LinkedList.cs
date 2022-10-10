@@ -78,6 +78,14 @@
         }
 
         /// <summary>
+        /// Constructor for <see cref="LinkedList"/> taking in a the first <see cref="Node"/>.
+        /// </summary>
+        /// <param name="start">The first <see cref="Node"/> reference.</param>
+        public LinkedList(Node start) {
+            list = start;
+        }
+
+        /// <summary>
         /// Return the first <see cref="Node"/> in the <see cref="LinkedList"/>.
         /// </summary>
         /// <returns>A reference to the first <see cref="Node"/>.</returns>
@@ -93,6 +101,18 @@
                 pointer = pointer.GetNext();
 
             return pointer;
+        }
+
+        /// <summary>
+        /// Add a <see cref="Node"/> to the beginning of the <see cref="LinkedList"/>.
+        /// </summary>
+        /// <param name="node">The <see cref="Node"/> that should be added.</param>
+        public void Add(Node node) {
+            //Set the next ListElement to the old start
+            node.SetNext(list);
+
+            //Move the start of the linked list back to the newly added element.
+            list = node;
         }
 
         /// <summary>
