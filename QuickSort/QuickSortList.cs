@@ -31,7 +31,7 @@
             //Sort the lower parts of the list
             Sort(low, partIndex);
 
-            //Sort the higher parts of the array
+            //Sort the higher parts of the list
             if(partIndex != null && partIndex == low)
                 Sort(partIndex.GetNext(), high);
             else if(partIndex != null && partIndex.GetNext() != null && partIndex.GetNext() != high)
