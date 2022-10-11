@@ -19,7 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DoubleLinkedList", "DoubleL
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Trees", "Trees\Trees.csproj", "{6918EA0F-7B2B-427E-9699-3732CD6FD975}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickSort", "QuickSort\QuickSort.csproj", "{68241169-A9E3-47DE-87F4-D8C91DB3A542}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuickSort", "QuickSort\QuickSort.csproj", "{68241169-A9E3-47DE-87F4-D8C91DB3A542}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Heap", "Heap\Heap.csproj", "{54DEE544-47C0-4B93-B468-2C9AB2E27E3E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{68241169-A9E3-47DE-87F4-D8C91DB3A542}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{68241169-A9E3-47DE-87F4-D8C91DB3A542}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{68241169-A9E3-47DE-87F4-D8C91DB3A542}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54DEE544-47C0-4B93-B468-2C9AB2E27E3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54DEE544-47C0-4B93-B468-2C9AB2E27E3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54DEE544-47C0-4B93-B468-2C9AB2E27E3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54DEE544-47C0-4B93-B468-2C9AB2E27E3E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
