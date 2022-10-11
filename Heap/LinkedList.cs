@@ -98,6 +98,33 @@
         }
 
         /// <summary>
+        /// Adds a <see cref="Node"/> at the correct sorted location in the <see cref="LinkedList"/>.
+        /// </summary>
+        /// <param name="node">The <see cref="Node"/> that should be added.</param>
+        public void AddSorted(Node node) {
+            Node pointer = list;
+            Node prevPointer = null;
+            int value = node.GetValue();
+
+            //Loop through as long as the new value is bigger and not going past the end
+            while(value > pointer.GetValue() && pointer.GetNext() != null) {
+                prevPointer = pointer;
+                pointer = pointer.GetNext();
+            }
+
+            //If the pointer is at the start being null just add the new node
+            if(prevPointer == null)
+                list.SetNext(node);
+            else {
+                //Make the new node reference the node that should be after it
+                node.SetNext(pointer);
+                //Add a reference to the new node
+                prevPointer.SetNext(node);
+            }
+
+        }
+
+        /// <summary>
         /// Removes the <see cref="Node"/> with the smallest 
         /// <see cref="Node.value">value</see> from the <see cref="LinkedList"/>.
         /// </summary>
