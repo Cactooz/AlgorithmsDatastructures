@@ -98,21 +98,42 @@
         }
 
         /// <summary>
-        /// Removes the last <see cref="Node"/> from the <see cref="LinkedList"/>.
+        /// Removes the <see cref="Node"/> with the smallest 
+        /// <see cref="Node.value">value</see> from the <see cref="LinkedList"/>.
         /// </summary>
         /// <returns>The removed <see cref="Node"/>.</returns>
         public Node Remove() {
             Node pointer = list;
+            Node? removalPointer = null;
 
             //Loop through to the second last element
-            while(pointer.GetNext().GetNext() != null)
+            while(pointer.GetNext() != null) {
+                //Check if the new node has a smaller value
+                if(pointer.GetNext().GetValue() < pointer.GetValue())
+                    removalPointer = pointer;
+
                 pointer = pointer.GetNext();
+            }
 
-            //Save the node that should be removed
-            Node returnNode = pointer.GetNext();
+            Node returnNode;
+            if(removalPointer == null) {
+                //Save the node that should be removed
+                returnNode = list;
 
-            //Unreferencing the node that is getting removed
-            pointer.SetNext(null);
+                //Move the list start to the next node
+                //Unreferencing the node that is getting removed
+                list = list.GetNext();
+            }
+            else {
+                //Save the node that should be removed
+                returnNode = removalPointer.GetNext();
+
+                //Unreferencing the node that is getting removed
+                if(removalPointer.GetNext().GetNext() == null)
+                    removalPointer.SetNext(null);
+                else
+                    removalPointer.SetNext(removalPointer.GetNext().GetNext());
+            }
 
             return returnNode;
         }
