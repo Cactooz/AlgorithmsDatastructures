@@ -113,7 +113,7 @@
             }
 
             //If the pointer is at the start being null just add the new node
-            if(prevPointer == null) {
+            if(prevPointer == null && value <= pointer.GetValue()) {
                 node.SetNext(list);
                 list = node;
             }
