@@ -113,14 +113,18 @@
             }
 
             //If the pointer is at the start being null just add the new node
-            if(prevPointer == null)
-                list.SetNext(node);
-            else {
+            if(prevPointer == null) {
+                node.SetNext(list);
+                list = node;
+            }
+            else if (value <= pointer.GetValue()) {
                 //Make the new node reference the node that should be after it
                 node.SetNext(pointer);
                 //Add a reference to the new node
                 prevPointer.SetNext(node);
             }
+            else
+                pointer.SetNext(node);
 
         }
 
@@ -161,6 +165,21 @@
                 else
                     removalPointer.SetNext(removalPointer.GetNext().GetNext());
             }
+
+            return returnNode;
+        }
+
+        /// <summary>
+        /// Removes the first <see cref="Node"/> from the <see cref="LinkedList"/>. 
+        /// Assumes that the list is already sorted, with the smallest item first.
+        /// </summary>
+        /// <returns>The removed <see cref="Node"/>.</returns>
+        public Node RemoveSorted() {
+            //Save the node to remove
+            Node returnNode = list;
+
+            //Move the list to the next node
+            list = list.GetNext();
 
             return returnNode;
         }
