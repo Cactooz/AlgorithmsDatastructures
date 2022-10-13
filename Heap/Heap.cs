@@ -71,11 +71,30 @@
 					right.root.Print();
 			}
 		}
+
             /// <summary>
-            /// Set the <see cref="Node.right">right</see> reference.
+        /// The base root <see cref="Nullable"/> <see cref="Node"/>.
             /// </summary>
-            /// <param name="node">The reference to the right <see cref="Node"/>.</param>
-            public void SetRight(Node node) => right = node;
+        private Node? root;
+		/// <summary>
+		/// The amount of other <see cref="Node"/>s in the <see cref="Node.left">left</see> and
+        /// <see cref="Node.right">right</see> branches below the <see cref="root"/> <see cref="Node"/>.
+		/// </summary>
+		private int size = 0;
+
+		/// <summary>
+		/// Empty constructor for <see cref="Heap"/> not adding any <see cref="root">root</see> <see cref="Node"/>.
+		/// </summary>
+		public Heap() { }
+
+        /// <summary>
+        /// Constructor for <see cref="Heap"/> with a single <see cref="root">root</see> <see cref="Node"/>.
+        /// </summary>
+        /// <param name="value">The <see cref="Node.priority"/> value.</param>
+		public Heap(int value) {
+            root = new Node(value);
+            size++;
+        }
         }
     }
 }
