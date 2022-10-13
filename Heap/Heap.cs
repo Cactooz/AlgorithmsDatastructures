@@ -1,4 +1,6 @@
-﻿namespace Heap {
+﻿using System.Text;
+
+namespace Heap {
     internal class Heap {
         /// <summary>
         /// A <see cref="Node"/> in the <see cref="Heap"/>.
@@ -70,6 +72,28 @@
 				if(right != null)
 					right.root.Print();
 			}
+
+			/// <summary>
+			/// Recursively print a tree visualization of the whole <see cref="Heap"/> tree with all the 
+			/// <see cref="priority">priority</see> values. 
+			/// </summary>
+			/// <param name="buffer">The text buffer with already added output.</param>
+			/// <param name="prefix">What should be printed before the <see cref="priority"/> value.</param>
+			/// <param name="depthPrefix">What should be printed left of the <see cref="priority"/> value <paramref name="prefix"/>
+            /// to make space for the underlying branches.</param>
+			public void TreePrint(StringBuilder buffer, string prefix = "", string depthPrefix = "") {
+				buffer.Append($"{prefix}[{priority}]\n");
+				if(right != null)
+					right.root.TreePrint(buffer, depthPrefix + " ├─ R:", depthPrefix + " │   ");
+				else
+					buffer.Append($"{depthPrefix} ├─ R:\n");
+				
+				if(left != null)
+                    left.root.TreePrint(buffer, depthPrefix + " └─ L:", depthPrefix + "     ");
+				else
+                    buffer.Append($"{depthPrefix} └─ L:\n");
+				}
+
 		}
 
         /// <summary>
@@ -108,6 +132,19 @@
             else
                 Console.WriteLine("The Heap is empty");
 		}
+
+        /// <summary>
+        /// Print out the whole <see cref="Heap"/> using the <see cref="Node.Print()"/>.
+        /// Printing it in a tree in a visual way with branches.
+        /// </summary>
+        public void BetterPrint() {
+            if(root != null) {
+                StringBuilder buffer = new();
+                root.TreePrint(buffer);
+                Console.WriteLine(buffer.ToString());
+			} else
+                Console.WriteLine("The Heap is empty");
+        }
 
 		/// <summary>
 		/// Add a new <see cref="Node"/> to the <see cref="Heap"/> in the correct location.
