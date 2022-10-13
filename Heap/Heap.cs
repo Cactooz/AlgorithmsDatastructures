@@ -72,9 +72,9 @@
 			}
 		}
 
-            /// <summary>
+        /// <summary>
         /// The base root <see cref="Nullable"/> <see cref="Node"/>.
-            /// </summary>
+        /// </summary>
         private Node? root;
 		/// <summary>
 		/// The amount of other <see cref="Node"/>s in the <see cref="Node.left">left</see> and
@@ -107,6 +107,55 @@
 			}
             else
                 Console.WriteLine("The Heap is empty");
+		}
+
+		/// <summary>
+		/// Add a new <see cref="Node"/> to the <see cref="Heap"/> in the correct location.
+		/// Depending on the inputted <paramref name="value"/> for the <see cref="Node.priority">priority</see>.
+		/// </summary>
+		/// <param name="value">The <see cref="Node.priority">priority</see> of the <see cref="Node"/>.</param>
+		public void Add(int value) {
+            //Add a new root node if there are no current root Node
+            if(root == null) {
+                root = new Node(value);
+                size++;
+                return;
+            }
+
+            Heap pointer = this;
+
+            //Swap the values if the priority value is smaller than the pointers root priority
+            if(value < pointer.root.GetPriority()) {
+                int temp = value;
+                value = pointer.root.GetPriority();
+                pointer.root.SetPriority(temp);
+
+                pointer.size++;
+            }
+
+            //If the left branch is empty add the new Heap of nodes there
+            if(pointer.root.GetLeft() == null) {
+                pointer.root.SetLeft(new Heap(value));
+            }
+            //If the right branch is empty add the new Heap of nodes there
+            else if(pointer.root.GetRight() == null) {
+                pointer.root.SetRight(new Heap(value));
+            }
+            //Go recursively down and add the new value at the correct spot in the heap
+            else {
+                //Go left if the left branch is smaller otherwise go right
+                if(pointer.root.GetLeft().size < pointer.root.GetRight().size)
+                    pointer = pointer.root.GetLeft();
+                else
+                    pointer = pointer.root.GetRight();
+
+                //Increase the size of that heap branch
+                pointer.size++;
+                //Recursively go down and put the value at the correct location
+                pointer.Add(value);
+            }
+            
         }
+
     }
 }
