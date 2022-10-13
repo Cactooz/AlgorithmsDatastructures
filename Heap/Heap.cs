@@ -1,14 +1,31 @@
 ﻿namespace Heap {
     internal class Heap {
+        /// <summary>
+        /// A <see cref="Node"/> in the <see cref="Heap"/>.
+        /// Having a <see cref="priority">priority</see> value and branches to two other <see cref="Heap"/> with more <see cref="Node"/>.
+        /// </summary>
         private class Node {
-            private int priority, subNodes;
-            private Node? left, right;
+            /// <summary>
+            /// The priority value of the <see cref="Node"/>.
+            /// Lower is a higher priority.
+            /// </summary>
+            private int priority;
+            /// <summary>
+            /// Branches to a new <see cref="Heap"/>.
+            /// </summary>
+            private Heap? left, right;
 
-            public Node(int priority, int subNodes, Node? left = null, Node? right = null) {
+			/// <summary>
+			/// Constructor for <see cref="Node"/> with the <paramref name="priority"/> value with optional <paramref name="left"/>
+            /// and <paramref name="right"/> <see cref="Heap"/> branches.
+			/// </summary>
+			/// <param name="priority">The <see cref="priority">priority</see> value of the <see cref="Node"/>.</param>
+			/// <param name="left"><see cref="Nullable"/> (optional) <see cref="left">left</see> <see cref="Heap"/> branch.</param>
+			/// <param name="right"><see cref="Nullable"/> (optional) <see cref="right">right</see> <see cref="Heap"/> branch.</param>
+			public Node(int priority, Heap? left = null, Heap? right = null) {
                 this.priority = priority;
                 this.left = left;
                 this.right = right;
-                this.subNodes = subNodes;
             }
 
             /// <summary>
@@ -17,32 +34,43 @@
             /// <returns>The <see cref="priority">priority</see> as an <see cref="int"/>.</returns>
             public int GetPriority() => priority;
             /// <summary>
-            /// Get the <see cref="subNodes">subNodes</see> of the current <see cref="Node"/>
-            /// in the whole <see cref="Heap"/>. Where the <see cref="subNodes">subNodes</see> are the amount of <see cref="Node"/>s
-            /// below the current <see cref="Node"/>.
+            /// Set the <see cref="priority">priority</see> value of the <see cref="Node"/>.
             /// </summary>
-            /// <returns>The amount of <see cref="subNodes">subNodes</see> as an <see cref="int"/>.</returns>
-            public int GetDepth() => subNodes;
+            /// <param name="priority">The new <see cref="priority">priority</see> as an <see cref="int"/>.</param>
+            public void SetPriority(int priority) => this.priority = priority;
             /// <summary>
-            /// Set the amount <see cref="subNodes">subNodes</see> for the <see cref="Node"/> in the <see cref="Heap"/>.
+            /// Get the <see cref="left">left</see> <see cref="Heap"/> of the <see cref="Node"/>.
             /// </summary>
-            /// <param name="value">The subNodes value as <see cref="int"/> of the <see cref="Node"/> in the <see cref="Heap"/></param>
-            public void SetDepth(int value) => subNodes = value;
+            /// <returns>The <see cref="left"/> <see cref="Heap"/> reference.</returns>
+            public Heap? GetLeft() => left;
             /// <summary>
-            /// Get the <see cref="Node.left">left</see> of the node.
+            /// Set the <see cref="left">left</see> <see cref="Heap"/> reference.
             /// </summary>
-            /// <returns>The <see cref="left"/> reference.</returns>
-            public Node? GetLeft() => left;
+            /// <param name="node">The reference to the <see cref="left"/> <see cref="Heap"/>.</param>
+            public void SetLeft(Heap heap) => left = heap;
             /// <summary>
-            /// Set the <see cref="Node.left">left</see> reference.
+            /// Get the <see cref="right">right</see> <see cref="Heap"/> of the <see cref="Node"/>.
             /// </summary>
-            /// <param name="node">The reference to the left <see cref="Node"/>.</param>
-            public void SetLeft(Node node) => left = node;
+            /// <returns>The <see cref="right"/> <see cref="Heap"/> reference.</returns>
+            public Heap? GetRight() => right;
             /// <summary>
-            /// Get the <see cref="Node.right">right</see> of the <see cref="Node"/>.
+            /// Set the <see cref="right">right</see> <see cref="Heap"/> reference.
             /// </summary>
-            /// <returns>The <see cref="right"/> reference.</returns>
-            public Node? GetRight() => right;
+            /// <param name="node">The reference to the right <see cref="Heap"/>.</param>
+            public void SetRight(Heap heap) => right = heap;
+
+			/// <summary>
+			/// Recursively print the <see cref="priority">priority</see> values of every <see cref="Node"/>
+            /// in the <see cref="Heap"/>. Using the depth first of the left branch and then the right branch.
+			/// </summary>
+			public void Print() {
+				if(left != null)
+					left.root.Print();
+				Console.Write($" {priority}");
+				if(right != null)
+					right.root.Print();
+			}
+		}
             /// <summary>
             /// Set the <see cref="Node.right">right</see> reference.
             /// </summary>
