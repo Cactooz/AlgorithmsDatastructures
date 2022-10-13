@@ -95,6 +95,18 @@
             root = new Node(value);
             size++;
         }
+
+		/// <summary>
+		/// Print out the whole <see cref="Heap"/> using the <see cref="Node.Print()"/> method.
+		/// Printing the tree depth first of the <see cref="Node.left"/> branch and then the <see cref="Node.right"/> branch.
+		/// </summary>
+		public void Print() {
+            if(root != null) {
+				root.Print();
+                Console.WriteLine();
+			}
+            else
+                Console.WriteLine("The Heap is empty");
         }
     }
 }
