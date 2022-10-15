@@ -1,10 +1,10 @@
 ﻿namespace Heap {
 	internal class HeapArray {
 		/// <summary>
-		/// The <see cref="int"/> <see cref="Array"/> holding the Heap priority values.
+		/// The <see cref="Nullable"/> <see cref="int"/> <see cref="Array"/> holding the Heap priority values.
 		/// Using 0 as null.
 		/// </summary>
-		private int[] queue;
+		private int?[] queue;
 		/// <summary>
 		/// The position item before where the next item should be added.
 		/// </summary>
@@ -16,11 +16,11 @@
 
 		/// <summary>
 		/// Constructor for <see cref="HeapArray"/>, creating a new <see cref="queue">queue</see>
-		/// <see cref="int"/> <see cref="Array"/> with the inputted <paramref name="size"/>.
+		/// <see cref="Nullable"/> <see cref="int"/> <see cref="Array"/> with the inputted <paramref name="size"/>.
 		/// </summary>
 		/// <param name="size"></param>
 		public HeapArray(int size) {
-			queue = new int[size];
+			queue = new int?[size];
 			this.size = 0;
 		}
 
@@ -31,7 +31,7 @@
 		/// <param name="value"></param>
 		public void Add(int value) {
 			//Add at the start if there are no items
-			if(queue[0] == 0) {
+			if(queue[0] == null) {
 				queue[0] = value;
 				index = 0;
 			}
@@ -62,7 +62,7 @@
 
 				//Swap the items if the inputted item is smaller than its parent
 				if(queue[idx] < queue[element]) {
-					int temp = queue[idx];
+					int? temp = queue[idx];
 					queue[idx] = queue[element];
 					queue[element] = temp;
 
@@ -77,14 +77,14 @@
 		/// underlying elements up to their correct location.
 		/// </summary>
 		/// <returns>The <see cref="int"/> value of the removed item.</returns>
-		public int Remove() {
+		public int? Remove() {
 			//Save the value of the first item
-			int returnValue = queue[0];
+			int? returnValue = queue[0];
 
 			//Move the last element to the start
 			queue[0] = queue[index];
 			//Remove the last element
-			queue[index--] = 0;
+			queue[index--] = null;
 			size--;
 
 			//Swap the first item down through the array
@@ -104,7 +104,7 @@
 			//Swap the two first items around if there are only two items left
 			if(size == 2) {
 				if(queue[1] < queue[0]) {
-					int temp = queue[0];
+					int? temp = queue[0];
 					queue[0] = queue[1];
 					queue[1] = temp;
 				}
@@ -115,8 +115,8 @@
 				int right = 2 * idx + 2;
 				int swap;
 
-				//Check that the items are in the array, not null (0) and if any of them are smaller than the inputted item
-				if(right < queue.Length && idx < queue.Length && queue[idx] != 0 && queue[right] != 0 && queue[left] != 0 && (queue[right] < queue[idx] || queue[left] < queue[idx])) {
+				//Check that the items are in the array, not null and if any of them are smaller than the inputted item
+				if(right < queue.Length && idx < queue.Length && queue[idx] != null && queue[right] != null && queue[left] != null && (queue[right] < queue[idx] || queue[left] < queue[idx])) {
 					//Swap with the right if its smaller than the left, otherwise swap with the left
 					if(queue[right] < queue[left])
 						swap = right;
@@ -124,7 +124,7 @@
 						swap = left;
 
 					//Swap the items
-					int tmp = queue[idx];
+					int? tmp = queue[idx];
 					queue[idx] = queue[swap];
 					queue[swap] = tmp;
 
