@@ -1,20 +1,20 @@
 ﻿using System.Text;
 
 namespace Heap {
-    internal class Heap {
-        /// <summary>
-        /// A <see cref="Node"/> in the <see cref="Heap"/>.
-        /// Having a <see cref="priority">priority</see> value and branches to two other <see cref="Heap"/> with more <see cref="Node"/>.
-        /// </summary>
-        private class Node {
-            /// <summary>
-            /// The priority value of the <see cref="Node"/>.
-            /// Lower is a higher priority.
-            /// </summary>
-            private int priority;
-            /// <summary>
+	internal class Heap {
+		/// <summary>
+		/// A <see cref="Node"/> in the <see cref="Heap"/>.
+		/// Having a <see cref="priority">priority</see> value and branches to two other <see cref="Heap"/> with more <see cref="Node"/>.
+		/// </summary>
+		private class Node {
+			/// <summary>
+			/// The priority value of the <see cref="Node"/>.
+			/// Lower is a higher priority.
+			/// </summary>
+			private int priority;
+			/// <summary>
 			/// Branches to a new <see cref="Nullable"/> <see cref="Node"/>.
-            /// </summary>
+			/// </summary>
 			private Node? left, right;
 			/// <summary>
 			/// The amount of <see cref="Node"/>s that are below the current <see cref="Node"/>.
@@ -24,48 +24,48 @@ namespace Heap {
 
 			/// <summary>
 			/// Constructor for <see cref="Node"/> with the <paramref name="priority"/> value with optional <paramref name="left"/>
-            /// and <paramref name="right"/> <see cref="Heap"/> branches.
+			/// and <paramref name="right"/> <see cref="Heap"/> branches.
 			/// </summary>
 			/// <param name="priority">The <see cref="priority">priority</see> value of the <see cref="Node"/>.</param>
 			/// <param name="subNodes">The amount of <see cref="Node"/>s that are below this <see cref="Node"/> in the <see cref="Heap"/> tree structure.</param>
 			/// <param name="left"><see cref="Nullable"/> (optional) <see cref="left">left</see> <see cref="Node"/> branch.</param>
 			/// <param name="right"><see cref="Nullable"/> (optional) <see cref="right">right</see> <see cref="Node"/> branch.</param>
 			public Node(int priority, int subNodes = 0, Node? left = null, Node? right = null) {
-                this.priority = priority;
+				this.priority = priority;
 				this.subNodes = subNodes;
-                this.left = left;
-                this.right = right;
-            }
+				this.left = left;
+				this.right = right;
+			}
 
-            /// <summary>
-            /// Get the <see cref="priority">priority</see> value of the <see cref="Node"/>.
-            /// </summary>
-            /// <returns>The <see cref="priority">priority</see> as an <see cref="int"/>.</returns>
-            public int GetPriority() => priority;
-            /// <summary>
-            /// Set the <see cref="priority">priority</see> value of the <see cref="Node"/>.
-            /// </summary>
-            /// <param name="priority">The new <see cref="priority">priority</see> as an <see cref="int"/>.</param>
+			/// <summary>
+			/// Get the <see cref="priority">priority</see> value of the <see cref="Node"/>.
+			/// </summary>
+			/// <returns>The <see cref="priority">priority</see> as an <see cref="int"/>.</returns>
+			public int GetPriority() => priority;
+			/// <summary>
+			/// Set the <see cref="priority">priority</see> value of the <see cref="Node"/>.
+			/// </summary>
+			/// <param name="priority">The new <see cref="priority">priority</see> as an <see cref="int"/>.</param>
 			public void SetPriority(int value) => this.priority = value;
-            /// <summary>
+			/// <summary>
 			/// Get the amount of <see cref="subNodes">subNodes</see> that the <see cref="Node"/>
 			/// has. Not counting itself, only all left and right <see cref="Node"/>s.
-            /// </summary>
+			/// </summary>
 			/// <returns>The amount of <see cref="Node"/>s as <see cref="int"/>.</returns>
 			public int GetSubNodes() => subNodes;
-            /// <summary>
+			/// <summary>
 			/// Get the <see cref="left">left</see> <see cref="Node"/> branch of the <see cref="Node"/>.
-            /// </summary>
+			/// </summary>
 			/// <returns>The <see cref="left"/> <see cref="Node"/> reference.</returns>
 			public Node? GetLeft() => left;
-            /// <summary>
+			/// <summary>
 			/// Set the <see cref="left">left</see> <see cref="Node"/> reference.
-            /// </summary>
+			/// </summary>
 			/// <param name="node">The reference to the <see cref="left"/> <see cref="Node"/>.</param>
 			public void SetLeft(Node value) => left = value;
-            /// <summary>
+			/// <summary>
 			/// Get the <see cref="right">right</see> <see cref="Node"/> branch of the <see cref="Node"/>.
-            /// </summary>
+			/// </summary>
 			/// <returns>The <see cref="right"/> <see cref="Node"/> reference.</returns>
 			public Node? GetRight() => right;
 			/// <summary>
@@ -143,10 +143,97 @@ namespace Heap {
 
 					subNodes++;
 					depth++;
-			}
+				}
 
 				return this;
 			}
+
+			/// <summary>
+			/// Moves a <see cref="Node"/> down through the <see cref="Heap"/> tree, to its
+			/// new correct position depending on its <paramref name="newPriority"/>.
+			/// </summary>
+			/// <param name="newPriority">The new <see cref="priority">priority</see> of the <see cref="Node"/> getting moved.</param>
+			/// <param name="depth"></param>
+			/// <returns>The <paramref name="depth"/> of the <see cref="Node"/>.
+			/// How many layers down in the <see cref="Heap"/> tree the <see cref="Node"/> got moved.</returns>
+			public int Move(int newPriority, int depth) {
+				//Set the priority of the Node to the newPriority
+				priority = newPriority;
+
+				//If both of the branches are null, return the depth
+				if(left == null && right == null)
+					return depth;
+
+				//Keeping track of the priority of the left and right branches
+				int leftPrio;
+				int rightPrio;
+
+				//If the left branch is null, check the right branch
+				if(left == null) {
+					rightPrio = right!.GetPriority();
+
+					//Swap the nodes if the right branch priority is lower than the priority
+					if(rightPrio < priority) {
+						int temp = priority;
+						priority = rightPrio;
+
+						//Increase the depth after swapping
+						depth++;
+
+						//Continue down recursively checking and swapping
+						depth = right.Move(temp, depth);
+					}
+					return depth;
+				}
+				//If the right branch is null, check with the left branch
+				else if (right == null) {
+					leftPrio = left.GetPriority();
+
+					//Swap the nodes if the left branch priority is lower than the priority
+					if(leftPrio < priority) {
+						int temp = priority;
+						priority = leftPrio;
+
+						//Increase the depth after swapping
+						depth++;
+
+						//Continue down recursively checking and swapping
+						depth = left.Move(temp, depth);
+					}
+					return depth;
+				}
+
+				//Get the priority of both branches
+				leftPrio = left!.GetPriority();
+				rightPrio = right!.GetPriority();
+
+				//Swap down the left branch if its smaller than the right branch and the priority
+				if(leftPrio < rightPrio && leftPrio < priority) {
+					int temp = priority;
+					priority = leftPrio;
+
+					//Increase the depth after swapping
+					depth++;
+
+					//Continue down recursively checking and swapping
+					depth = left.Move(temp, depth);
+				}
+				//Swap down the right branch if its smaller than the priority
+				else if(rightPrio < priority) {
+					int temp = priority;
+					priority = rightPrio;
+
+					//Increase the depth after swapping
+					depth++;
+
+					//Continue down recursively checking and swapping
+					depth = right.Move(temp, depth);
+				}
+
+				//Return the gotten depth
+				return depth;
+			}
+
 			/// <summary>
 			/// Recursively print a tree visualization of the whole <see cref="Heap"/> tree with all the 
 			/// <see cref="priority">priority</see> values. 
@@ -154,7 +241,7 @@ namespace Heap {
 			/// <param name="buffer">The text buffer with already added output.</param>
 			/// <param name="prefix">What should be printed before the <see cref="priority"/> value.</param>
 			/// <param name="depthPrefix">What should be printed left of the <see cref="priority"/> value <paramref name="prefix"/>
-            /// to make space for the underlying branches.</param>
+			/// to make space for the underlying branches.</param>
 			public void Print(StringBuilder buffer, string prefix = "", string depthPrefix = "") {
 				//Print the node
 				buffer.Append($"{prefix}[{priority}:{subNodes}]\n");
@@ -167,15 +254,15 @@ namespace Heap {
 				if(left != null)
                     left.Print(buffer, depthPrefix + " └─ L:", depthPrefix + "     ");
 				else
-                    buffer.Append($"{depthPrefix} └─ L:\n");
-				}
+					buffer.Append($"{depthPrefix} └─ L:\n");
+			}
 
 		}
 
-        /// <summary>
-        /// The base root <see cref="Nullable"/> <see cref="Node"/>.
-        /// </summary>
-        private Node? root;
+		/// <summary>
+		/// The base root <see cref="Nullable"/> <see cref="Node"/>.
+		/// </summary>
+		private Node? root;
 
 		/// <summary>
 		/// The depth that a <see cref="Node"/> is getting moved down.
@@ -187,26 +274,26 @@ namespace Heap {
 		/// </summary>
 		public Heap() { }
 
-        /// <summary>
-        /// Constructor for <see cref="Heap"/> with a single <see cref="root">root</see> <see cref="Node"/>.
-        /// </summary>
-        /// <param name="value">The <see cref="Node.priority"/> value.</param>
+		/// <summary>
+		/// Constructor for <see cref="Heap"/> with a single <see cref="root">root</see> <see cref="Node"/>.
+		/// </summary>
+		/// <param name="value">The <see cref="Node.priority"/> value.</param>
 		public Heap(int value) {
-            root = new Node(value);
-			}
+			root = new Node(value);
+		}
 
-        /// <summary>
-        /// Print out the whole <see cref="Heap"/> using the <see cref="Node.Print()"/>.
-        /// Printing it in a tree in a visual way with branches.
-        /// </summary>
+		/// <summary>
+		/// Print out the whole <see cref="Heap"/> using the <see cref="Node.Print()"/>.
+		/// Printing it in a tree in a visual way with branches.
+		/// </summary>
 		public void Print() {
-            if(root != null) {
-                StringBuilder buffer = new();
+			if(root != null) {
+				StringBuilder buffer = new();
 				root.Print(buffer);
-                Console.WriteLine(buffer.ToString());
+				Console.WriteLine(buffer.ToString());
 			} else
-                Console.WriteLine("The Heap is empty");
-        }
+				Console.WriteLine("The Heap is empty");
+		}
 
 		/// <summary>
 		/// Add a new <see cref="Node"/> to the <see cref="Heap"/> in the correct location.
@@ -216,15 +303,15 @@ namespace Heap {
 		/// <returns>The amount of steps down the <see cref="Heap"/> tree the <see cref="Node"/> was added, as <see cref="int"/>.</returns>
 		public int Add(int value) {
 			depth = 0;
-            //Add a new root node if there are no current root Node
-            if(root == null) {
-                root = new Node(value);
+			//Add a new root node if there are no current root Node
+			if(root == null) {
+				root = new Node(value);
 				return 0;
 			}
 
 			root.Input(value);
 			return depth;
-            }
+		}
 
 		/// <summary>
 		/// Removes the <see cref="root"/> <see cref="Node"/> from the <see cref="Heap"/>
@@ -241,19 +328,26 @@ namespace Heap {
 
 				//Return the removed Nodes priority
 				return returnNode;
-            }
+			}
 
 			//Return null if there are no nodes
 			return null;
-            }
+		}
 
 		/// <summary>
 		/// Increment the <see cref="root"/> <see cref="Node"/> with <paramref name="newPriority"/> and Push the <see cref="Node"/>
 		/// down the <see cref="Heap"/> tree to its new correct position.
 		/// </summary>
 		/// <param name="newPriority">The <see cref="int"/> value that the <see cref="Node.priority"/> should be increased with.</param>
-            
-        }
+		/// <returns>The amount of steps down the <see cref="Heap"/> tree the <see cref="Node"/> was pushed, as <see cref="int"/>.</returns>
+		public int Push(int newPriority) {
+			if(root != null && newPriority <= 0)
+				//Move the root node down and return the depth it moved down
+				return root.Move(root.GetPriority() + newPriority, 0);
 
-    }
+			//Return 0 if there are no priority increase or no root node
+			return 0;
+		}
+
+	}
 }
