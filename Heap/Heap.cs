@@ -65,12 +65,12 @@ namespace Heap {
 			/// Recursively print the <see cref="priority">priority</see> values of every <see cref="Node"/>
             /// in the <see cref="Heap"/>. Using the depth first of the left branch and then the right branch.
 			/// </summary>
-			public void Print() {
-				if(left != null)
-					left.root.Print();
-				Console.Write($" {priority}");
-				if(right != null)
-					right.root.Print();
+			/// <returns>The removed <see cref="Nullable"/> <see cref="Node"/>.</returns>
+			public Node? Promote() {
+				//If there are no branches, return null to remove the current node
+				if(left == null && right == null) return null;
+
+				//Promote the right node if the are no left branch node
 			}
 
 			/// <summary>
@@ -81,15 +81,17 @@ namespace Heap {
 			/// <param name="prefix">What should be printed before the <see cref="priority"/> value.</param>
 			/// <param name="depthPrefix">What should be printed left of the <see cref="priority"/> value <paramref name="prefix"/>
             /// to make space for the underlying branches.</param>
-			public void TreePrint(StringBuilder buffer, string prefix = "", string depthPrefix = "") {
-				buffer.Append($"{prefix}[{priority}]\n");
+			public void Print(StringBuilder buffer, string prefix = "", string depthPrefix = "") {
+				//Print the node
+				buffer.Append($"{prefix}[{priority}:{subNodes}]\n");
+				//Go down the right branch
 				if(right != null)
-					right.root.TreePrint(buffer, depthPrefix + " ├─ R:", depthPrefix + " │   ");
+					right.Print(buffer, depthPrefix + " ├─ R:", depthPrefix + " │   ");
 				else
 					buffer.Append($"{depthPrefix} ├─ R:\n");
-				
+				//Go down the left branch
 				if(left != null)
-                    left.root.TreePrint(buffer, depthPrefix + " └─ L:", depthPrefix + "     ");
+                    left.Print(buffer, depthPrefix + " └─ L:", depthPrefix + "     ");
 				else
                     buffer.Append($"{depthPrefix} └─ L:\n");
 				}
@@ -117,30 +119,16 @@ namespace Heap {
         /// <param name="value">The <see cref="Node.priority"/> value.</param>
 		public Heap(int value) {
             root = new Node(value);
-            size++;
-        }
-
-		/// <summary>
-		/// Print out the whole <see cref="Heap"/> using the <see cref="Node.Print()"/> method.
-		/// Printing the tree depth first of the <see cref="Node.left"/> branch and then the <see cref="Node.right"/> branch.
-		/// </summary>
-		public void Print() {
-            if(root != null) {
-				root.Print();
-                Console.WriteLine();
 			}
-            else
-                Console.WriteLine("The Heap is empty");
-		}
 
         /// <summary>
         /// Print out the whole <see cref="Heap"/> using the <see cref="Node.Print()"/>.
         /// Printing it in a tree in a visual way with branches.
         /// </summary>
-        public void BetterPrint() {
+		public void Print() {
             if(root != null) {
                 StringBuilder buffer = new();
-                root.TreePrint(buffer);
+				root.Print(buffer);
                 Console.WriteLine(buffer.ToString());
 			} else
                 Console.WriteLine("The Heap is empty");
