@@ -136,11 +136,19 @@
 
 		/// <summary>
 		/// Print out the whole <see cref="queue"/> <see cref="int"/> <see cref="Array"/>.
-		/// Where 0 are representing null.
 		/// </summary>
 		public void Print() {
-			Console.WriteLine($"{{ {string.Join(",", queue)} }}");
-		}
+			Console.Write("{ ");
+			for(int i = 0; i < queue.Length; i++) {
+				if(queue[i] != null) {
+					if(i != 0)
+						Console.Write(", ");
+					
+					Console.Write(queue[i]);
+				}
+			}
+            Console.WriteLine(" }");
+        }
 
 	}
 }
