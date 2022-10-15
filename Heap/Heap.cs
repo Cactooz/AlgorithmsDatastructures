@@ -75,8 +75,8 @@ namespace Heap {
 			public void SetRight(Node value) => right = value;
 
 			/// <summary>
-			/// Recursively print the <see cref="priority">priority</see> values of every <see cref="Node"/>
-            /// in the <see cref="Heap"/>. Using the depth first of the left branch and then the right branch.
+			/// Used to <see cref="Remove"/> a <see cref="Node"/> from the <see cref="Heap"/>.
+			/// Recursively makes sure to promote all underlying <see cref="Node"/>s.
 			/// </summary>
 			/// <returns>The removed <see cref="Nullable"/> <see cref="Node"/>.</returns>
 			public Node? Promote() {
@@ -84,8 +84,69 @@ namespace Heap {
 				if(left == null && right == null) return null;
 
 				//Promote the right node if the are no left branch node
+				if(left == null) return right;
+
+				//Promote the left node if the are no right branch node
+				if(right == null) return left;
+
+				//Check if the left node has a smaller priority than the right node
+				if(left.GetPriority() < right.GetPriority()) {
+					//Set the priority to the left branch nodes priority
+					priority = left.GetPriority();
+					//Promote all underlying nodes
+					left = left.Promote();
+				} else {
+					//Set the priority to the right branch nodes priority
+					priority = right.GetPriority();
+					//Promote all underlying nodes
+					right = right.Promote();
+				}
+				//Remove one subNode from the current node
+				subNodes--;
+
+				//Return the current node that should be removed
+				return this;
 			}
 
+			/// <summary>
+			/// Add a new <see cref="Node"/> to the tree, moving down through the <see cref="Heap"/> tree
+			/// and adds a new <see cref="Node"/> at the bottom of the tree.
+			/// </summary>
+			/// <param name="value">The <see cref="priority"/> of the new <see cref="Node"/>.</param>
+			/// <returns>The <see cref="Node"/> that gets swapped to the new position.</returns>
+			public Node Input(int value) {
+				//Swap the values if the priority value is smaller than the pointers root priority
+				if(value < priority) {
+					int temp = priority;
+					priority = value;
+					Input(temp);
+				}
+				//If the left branch is empty add the new Heap of nodes there
+				else if(left == null) {
+					left = new Node(value);
+					subNodes++;
+					depth++;
+				}
+				//If the right branch is empty add the new Heap of nodes there
+				else if(right == null) {
+					right = new Node(value);
+					subNodes++;
+					depth++;
+				}
+				//Go recursively down and add the new value at the correct spot in the heap
+				else {
+					//Go left if the left branch is smaller otherwise go right
+					if(left.GetSubNodes() < right.GetSubNodes())
+						left = left.Input(value);
+					else
+						right = right.Input(value);
+
+					subNodes++;
+					depth++;
+			}
+
+				return this;
+			}
 			/// <summary>
 			/// Recursively print a tree visualization of the whole <see cref="Heap"/> tree with all the 
 			/// <see cref="priority">priority</see> values. 
@@ -117,10 +178,9 @@ namespace Heap {
         private Node? root;
 
 		/// <summary>
-		/// The amount of other <see cref="Node"/>s in the <see cref="Node.left">left</see> and
-        /// <see cref="Node.right">right</see> branches below the <see cref="root"/> <see cref="Node"/>.
+		/// The depth that a <see cref="Node"/> is getting moved down.
 		/// </summary>
-		private int size = 0;
+		private static int depth = 0;
 
 		/// <summary>
 		/// Empty constructor for <see cref="Heap"/> not adding any <see cref="root">root</see> <see cref="Node"/>.
@@ -153,46 +213,45 @@ namespace Heap {
 		/// Depending on the inputted <paramref name="value"/> for the <see cref="Node.priority">priority</see>.
 		/// </summary>
 		/// <param name="value">The <see cref="Node.priority">priority</see> of the <see cref="Node"/>.</param>
-		public void Add(int value) {
+		/// <returns>The amount of steps down the <see cref="Heap"/> tree the <see cref="Node"/> was added, as <see cref="int"/>.</returns>
+		public int Add(int value) {
+			depth = 0;
             //Add a new root node if there are no current root Node
             if(root == null) {
                 root = new Node(value);
-                size++;
-                return;
+				return 0;
+			}
+
+			root.Input(value);
+			return depth;
             }
 
-            Heap pointer = this;
+		/// <summary>
+		/// Removes the <see cref="root"/> <see cref="Node"/> from the <see cref="Heap"/>
+		/// and moves up all underlying elements to its correct location based on the <see cref="Node.priority"/>.
+		/// </summary>
+		/// <returns>The <see cref="Node.priority"/> value of the removed <see cref="Node"/>.</returns>
+		public int? Remove() {
+			if(root != null) {
+				//Save the Node to return
+				int returnNode = root.GetPriority();
 
-            //Swap the values if the priority value is smaller than the pointers root priority
-            if(value < pointer.root.GetPriority()) {
-                int temp = value;
-                value = pointer.root.GetPriority();
-                pointer.root.SetPriority(temp);
+				//Promote all underlying nodes
+				root = root.Promote();
 
-                pointer.size++;
+				//Return the removed Nodes priority
+				return returnNode;
             }
 
-            //If the left branch is empty add the new Heap of nodes there
-            if(pointer.root.GetLeft() == null) {
-                pointer.root.SetLeft(new Heap(value));
+			//Return null if there are no nodes
+			return null;
             }
-            //If the right branch is empty add the new Heap of nodes there
-            else if(pointer.root.GetRight() == null) {
-                pointer.root.SetRight(new Heap(value));
-            }
-            //Go recursively down and add the new value at the correct spot in the heap
-            else {
-                //Go left if the left branch is smaller otherwise go right
-                if(pointer.root.GetLeft().size < pointer.root.GetRight().size)
-                    pointer = pointer.root.GetLeft();
-                else
-                    pointer = pointer.root.GetRight();
 
-                //Increase the size of that heap branch
-                pointer.size++;
-                //Recursively go down and put the value at the correct location
-                pointer.Add(value);
-            }
+		/// <summary>
+		/// Increment the <see cref="root"/> <see cref="Node"/> with <paramref name="newPriority"/> and Push the <see cref="Node"/>
+		/// down the <see cref="Heap"/> tree to its new correct position.
+		/// </summary>
+		/// <param name="newPriority">The <see cref="int"/> value that the <see cref="Node.priority"/> should be increased with.</param>
             
         }
 
