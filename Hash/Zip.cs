@@ -46,5 +46,30 @@ namespace Hash {
 			return false;
 		}
 
+		public bool BinarySearch(int code) {
+			int first = 0;
+			int last = max;
+
+			while(true) {
+				//Set the mid between the first and last point
+				int mid = (first + last) / 2;
+
+				if(data[mid].ZipCode.Equals(code))
+					return true;
+				//If the key is larger than the current value, set the first point to current mid
+				if(data[mid].ZipCode.CompareTo(code) < 0 && mid < last) {
+					first = mid + 1;
+					continue;
+				}
+				//If the key is smaller than the current value, set the last point to current mid
+				else if(data[mid].ZipCode.CompareTo(code) > 0 && mid > first) {
+					last = mid - 1;
+					continue;
+				}
+				//If first = last, then there are no value in the array matching the key
+				return false;
+			}
+		}
+
 	}
 }
