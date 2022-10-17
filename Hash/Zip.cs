@@ -1,17 +1,19 @@
-﻿namespace Hash {
+﻿using System.Text.RegularExpressions;
+
+namespace Hash {
 	internal class Zip {
 		private class Entry {
-			private string zipCode;
+			private int zipCode;
 			private string zipLocation;
 			private int zipPopulation;
 
-			public Entry(string code, string location, int population) {
+			public Entry(int code, string location, int population) {
 				zipCode = code;
 				zipLocation = location;
 				zipPopulation = population;
 			}
 
-			public string ZipCode { get => zipCode; }
+			public int ZipCode { get => zipCode; }
 			public string ZipLocation { get => zipLocation; }
 			public int ZipPopulation { get => zipPopulation; }
 
@@ -30,13 +32,13 @@
 
 				while((line = reader.ReadLine()) != null) {
 					string[] row = line.Split(",");
-					data[i++] = new Entry(row[0], row[1], int.Parse(row[2]));
+					data[i++] = new Entry(int.Parse(Regex.Replace(row[0], @"\s+", "")), row[1], int.Parse(row[2]));
 				}
 				max = i - 1;
 			}
 		}
 
-		public bool Lookup(string code) {
+		public bool Lookup(int code) {
 			for(int i = 0; i < max; i++) {
 				if(data[i].ZipCode.Equals(code))
 					return true;

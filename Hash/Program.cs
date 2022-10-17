@@ -25,7 +25,7 @@ namespace Hash {
 					//Benchmark start
 					long t0 = Stopwatch.GetTimestamp();
 
-					zip.Lookup("994 99");
+					zip.Lookup(11115);
 
 					long t1 = Stopwatch.GetTimestamp();
 
