@@ -37,7 +37,7 @@
 		}
 
 		public bool Lookup(string code) {
-			for(int i = 0; i < data.Length; i++) {
+			for(int i = 0; i < max; i++) {
 				if(data[i].ZipCode.Equals(code))
 					return true;
 			}
