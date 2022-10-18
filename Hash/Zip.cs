@@ -20,22 +20,33 @@ namespace Hash {
 		}
 
 		Entry[] data;
+		int[] codes;
 		private int max;
 
 		public Zip(string file) {
-			int lines = File.ReadAllLines(file).Count();
-			data = new Entry[100000];
+			//int lines = File.ReadAllLines(file).Count();
+			data = new Entry[10000];
+			codes = new int[10000];
 
 			using(StreamReader reader = new StreamReader(file)) {
 				string line;
+				int i = 0;
 
 				//Read all lines
 				while((line = reader.ReadLine()) != null) {
 					//Split the read line
 					string[] row = line.Split(",");
 
-					//Add the Entry with the zipcode used as index 
-					data[int.Parse(Regex.Replace(row[0], @"\s+", ""))] = new Entry(int.Parse(Regex.Replace(row[0], @"\s+", "")), row[1], int.Parse(row[2]));
+					int zip = int.Parse(Regex.Replace(row[0], @"\s+", ""));
+
+					//Add the Entry to the data array 
+					data[i] = new Entry(zip, row[1], int.Parse(row[2]));
+
+					//Save all zipcodes to array
+					codes[i] = zip;
+
+					//Save thee amount of codes added
+					max = i++;
 				}
 			}
 		}
@@ -85,6 +96,40 @@ namespace Hash {
 				return false;
 			}
 		}
+		/// <summary>
+		/// Count the number of collisions between <see cref="Entry.zipCode"/>s when hashing
+		/// them using <paramref name="mod"/> values.
+		/// </summary>
+		/// <param name="mod">The value that the <see cref="Entry.zipCode"/> are hashed with.</param>
+		public void Collisions(int mod) {
+			int[] data = new int[mod];
+			//Keeping track on the amount of collisions
+			int[] collisions = new int[15];
 
+			for(int i = 0; i < max; i++) {
+				//Get the index
+				int index = codes[i] % mod;
+				//Add a collisions 
+				collisions[data[index]]++;
+				//Store that a value has been hashed here
+				data[index]++;
+			}
+
+			//Get average amount of collisions
+			int maxCollisions = 0;
+			int totalCollisions = 0;
+
+			while(collisions[maxCollisions] > 0)
+				totalCollisions += collisions[maxCollisions] * maxCollisions++;
+
+			Console.WriteLine($"Mod: {mod} - Average collisions: {(float)(totalCollisions / (float)max)}");
+
+			//Print all collisions
+			for(int i = 0; i < 15; i++) {
+				Console.Write($"({i}){collisions[i]}\t");
+		}
+
+			Console.WriteLine();
+		}
 	}
 }

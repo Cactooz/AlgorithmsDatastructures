@@ -7,7 +7,12 @@ namespace Hash {
 			string file = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\zipcodes.csv"));
 			Zip zip = new Zip(file);
 
-			//Variable for converting Stopwatch.GetTimestamp output to nanoseconds.
+			for(int i = 10000; i <= 100000; i += 10000)
+				zip.Collisions(i);
+
+			zip.Collisions(20071);
+
+			/*//Variable for converting Stopwatch.GetTimestamp output to nanoseconds.
 			long nanosecondsPerTick = 1000000000 / Stopwatch.Frequency;
 			//The amount of times to run the tests
 			int runAmount = 1000;
@@ -40,7 +45,7 @@ namespace Hash {
 					minTime = time;
 			}
 
-			Console.WriteLine($"{minTime} ns");
+			Console.WriteLine($"{minTime} ns");*/
 		}
 	}
 }
