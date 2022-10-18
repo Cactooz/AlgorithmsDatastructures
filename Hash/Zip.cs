@@ -24,9 +24,17 @@ namespace Hash {
 		private int max;
 
 		public Zip(string file) {
-			//int lines = File.ReadAllLines(file).Count();
-			data = new Entry[10000];
-			codes = new int[10000];
+			using(StreamReader reader = new StreamReader(file)) {
+				//Get the amount of lines in the file
+				int lines = 0;
+				while(reader.ReadLine() != null)
+					lines++;
+
+				data = new Entry[lines];
+				codes = new int[lines];
+
+				//Move the reader to the start
+				reader.BaseStream.Position = 0;
 
 			using(StreamReader reader = new StreamReader(file)) {
 				string line;
@@ -124,7 +132,7 @@ namespace Hash {
 
 			float averageCollisions = totalCollisions / (float)max;
 
-			Console.WriteLine($"Mod: {mod} - Average collisions: {averageCollisions} - Score: {(float)((1 - averageCollisions) / (float)mod) * 100000}");
+			Console.WriteLine($"Mod: {mod} - Average collisions: {averageCollisions} - Score: {(float)((1 - averageCollisions) / mod) * 100000}");
 
 			//Print all collisions
 			for(int i = 0; i < 15; i++) {
