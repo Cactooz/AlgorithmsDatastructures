@@ -122,7 +122,9 @@ namespace Hash {
 			while(collisions[maxCollisions] > 0)
 				totalCollisions += collisions[maxCollisions] * maxCollisions++;
 
-			Console.WriteLine($"Mod: {mod} - Average collisions: {(float)(totalCollisions / (float)max)}");
+			float averageCollisions = totalCollisions / (float)max;
+
+			Console.WriteLine($"Mod: {mod} - Average collisions: {averageCollisions} - Score: {(float)((1 - averageCollisions) / (float)mod) * 100000}");
 
 			//Print all collisions
 			for(int i = 0; i < 15; i++) {

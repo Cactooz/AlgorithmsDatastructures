@@ -11,6 +11,7 @@ namespace Hash {
 				zip.Collisions(i);
 
 			zip.Collisions(20071);
+			zip.Collisions(8237);
 
 			/*//Variable for converting Stopwatch.GetTimestamp output to nanoseconds.
 			long nanosecondsPerTick = 1000000000 / Stopwatch.Frequency;
