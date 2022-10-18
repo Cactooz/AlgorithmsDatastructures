@@ -50,8 +50,8 @@ namespace Hash {
 				while(reader.ReadLine() != null)
 					lines++;
 
-				data = new Buckets[lines];
-				codes = new int[lines];
+				data = new Buckets[lines + 1];
+				codes = new int[lines + 1];
 
 				//Move the reader to the start
 				reader.BaseStream.Position = 0;
@@ -199,10 +199,10 @@ namespace Hash {
 		/// them using <paramref name="mod"/> values.
 		/// </summary>
 		/// <param name="mod">The value that the <see cref="Entry.zipCode"/> are hashed with.</param>
-		public void Collisions(int mod) {
+		public float Collisions(int mod) {
 			int[] data = new int[mod];
 			//Keeping track on the amount of collisions
-			int[] collisions = new int[15];
+			int[] collisions = new int[30];
 
 			for(int i = 0; i < max; i++) {
 				//Get the index
@@ -221,8 +221,9 @@ namespace Hash {
 				totalCollisions += collisions[maxCollisions] * maxCollisions++;
 
 			float averageCollisions = totalCollisions / (float)max;
+			float score = (float)((1 - averageCollisions) / mod) * 100000;
 
-			Console.WriteLine($"Mod: {mod} - Average collisions: {averageCollisions} - Score: {(float)((1 - averageCollisions) / mod) * 100000}");
+            Console.WriteLine($"Mod: {mod} - Average collisions: {averageCollisions} - Score: {score}");
 
 			//Print all collisions
 			for(int i = 0; i < 15; i++) {
@@ -230,6 +231,8 @@ namespace Hash {
 			}
 
 			Console.WriteLine();
+
+			return score;
 		}
 	}
 }

@@ -5,7 +5,25 @@ namespace Hash {
 		static void Main(string[] args) {
 			//Get the path to the .csv file containing all zipcodes
 			string file = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\zipcodes.csv"));
-			int hash = 8447;
+
+            Zip zip = new Zip(file);
+
+			float maxScore = 0;
+			int bestHash = 0;
+			//Find best hash value score
+			for(int i = 3000; i < 9000; i++) {
+				float score = zip.Collisions(i);
+				if(score > maxScore) {
+                    maxScore = score;
+					bestHash = i;
+                }
+			}
+
+			Console.WriteLine($"Best Hash: {bestHash} with a score of {maxScore}");
+
+			/*
+
+            int hash = 8447;
 			int code = 60591;
 			
 			Console.WriteLine($"Hash: {hash} Zip: {code}");
@@ -14,9 +32,8 @@ namespace Hash {
 
 			Console.WriteLine(linearZip.Lookup(code));
 
-			Zip zip = new Zip(file, hash);
 
-			Console.WriteLine(zip.LookupHash(code));
+			Console.WriteLine(zip.LookupHash(code));*/
 
 			/*//Variable for converting Stopwatch.GetTimestamp output to nanoseconds.
 			long nanosecondsPerTick = 1000000000 / Stopwatch.Frequency;
