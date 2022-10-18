@@ -25,7 +25,7 @@ namespace Hash {
 					//Benchmark start
 					long t0 = Stopwatch.GetTimestamp();
 
-					zip.BinarySearch(11115);
+					zip.LookupIndex(99499);
 
 					long t1 = Stopwatch.GetTimestamp();
 

@@ -24,18 +24,33 @@ namespace Hash {
 
 		public Zip(string file) {
 			int lines = File.ReadAllLines(file).Count();
-			data = new Entry[10000];
+			data = new Entry[100000];
 
 			using(StreamReader reader = new StreamReader(file)) {
 				string line;
-				int i = 0;
 
+				//Read all lines
 				while((line = reader.ReadLine()) != null) {
+					//Split the read line
 					string[] row = line.Split(",");
-					data[i++] = new Entry(int.Parse(Regex.Replace(row[0], @"\s+", "")), row[1], int.Parse(row[2]));
+
+					//Add the Entry with the zipcode used as index 
+					data[int.Parse(Regex.Replace(row[0], @"\s+", ""))] = new Entry(int.Parse(Regex.Replace(row[0], @"\s+", "")), row[1], int.Parse(row[2]));
 				}
-				max = i - 1;
 			}
+		}
+
+		/// <summary>
+		/// Find a <see cref="Entry.zipCode"/> in the <see cref="data"/> <see cref="Array"/> using the
+		/// index as the <see cref="Entry.zipCode"/>.
+		/// </summary>
+		/// <param name="code">The <see cref="Entry.zipCode"/> to search for.</param>
+		/// <returns><see cref="Boolean"/> if the <see cref="Entry.zipCode"/> could be found or not.</returns>
+		public bool LookupIndex(int code) {
+			if(data[code] != null)
+				return true;
+			else
+				return false;
 		}
 
 		public bool Lookup(int code) {
