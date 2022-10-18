@@ -5,13 +5,9 @@ namespace Hash {
 		static void Main(string[] args) {
 			//Get the path to the .csv file containing all zipcodes
 			string file = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\zipcodes.csv"));
-			Zip zip = new Zip(file);
+			Zip zip = new Zip(file, 8447);
 
-			for(int i = 10000; i <= 100000; i += 10000)
-				zip.Collisions(i);
-
-			zip.Collisions(20071);
-			zip.Collisions(8237);
+			Console.WriteLine(zip.LookupHash(60591));
 
 			/*//Variable for converting Stopwatch.GetTimestamp output to nanoseconds.
 			long nanosecondsPerTick = 1000000000 / Stopwatch.Frequency;
