@@ -71,5 +71,13 @@
 			return null;
 		} 
 
+		public int WordToNumbers(string word) {
+			string number = "";
+			foreach(char c in word)
+				number += (ToNumber(c) / 3) + 1;
+
+			return int.Parse(number);
+		}
+
 	}
 }
