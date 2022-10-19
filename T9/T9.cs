@@ -20,7 +20,6 @@
 		/// Constructor for <see cref="T9"/>. Puts A-Ö excluding Q and W into <see cref="chars"/> array.
 		/// </summary>
 		public T9() {
-
 			int j = 0;
 			//Fill the chars array with all the characters
 			for(int i = 0; i < 24; i++) {
@@ -28,11 +27,11 @@
 				if(i == 16 || i == 21)
 					j++;
 
-				chars[i] = (char)(65 + j++);
+				chars[i] = (char)(97 + j++);
 			}
-			chars[24] = 'Å';
-			chars[25] = 'Ä';
-			chars[26] = 'Ö';
+			chars[24] = 'å';
+			chars[25] = 'ä';
+			chars[26] = 'ö';
 
 		}
 
@@ -44,19 +43,19 @@
 		/// <returns><see cref="int"/> value of the inputted <paramref name="character"/>.</returns>
 		public int? ToNumber(char character) {
 			//Make sure the inputted character is uppercase
-			character = char.ToUpper(character);
+			character = char.ToLower(character);
 
 			int pos;
 
 			//Get the position in the array of the char
-			if(character.CompareTo('P') <= 0)
-				pos = character - 65;
+			if(character.CompareTo('p') <= 0)
+				pos = character - 97;
 			//Get special positions for chars after Q
-			else if(character.CompareTo('V') <= 0)
-				pos = character - 66;
+			else if(character.CompareTo('v') <= 0)
+				pos = character - 98;
 			//Get special positions for chars after W
-			else if(character.CompareTo('Z') <= 0)
-				pos = character - 67;
+			else if(character.CompareTo('z') <= 0)
+				pos = character - 99;
 			else
 				//Move position into end of array for ÅÄÖ
 				pos = 24;
