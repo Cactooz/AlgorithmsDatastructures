@@ -92,6 +92,17 @@
 			return pointer.Word;
 		}
 
+		/// <summary>
+		/// Convert a inputted key <see cref="char"/> 1-9 into <see cref="int"/>.
+		/// </summary>
+		/// <param name="character">The <see cref="char"/> to convert into an <see cref="int"/>.</param>
+		/// <returns>The <paramref name="character"/> as an <see cref="int"/>.</returns>
+		public int KeyToNumber(char character) {
+			if(character > '0' &&  character <= '9')
+				return character - 49;
+
+			return -1;
+		}
 
 		/// <summary>
 		/// Convert the inputted <paramref name="character"/> into a <see cref="int"/>.
