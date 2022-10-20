@@ -41,7 +41,7 @@
 		/// </summary>
 		/// <param name="character">The <see cref="char"/> to convert to <see cref="int"/>.</param>
 		/// <returns><see cref="int"/> value of the inputted <paramref name="character"/>.</returns>
-		public int? ToNumber(char character) {
+		public int? CharToNumber(char character) {
 			//Make sure the inputted character is uppercase
 			character = char.ToLower(character);
 
@@ -73,7 +73,7 @@
 		public int WordToNumbers(string word) {
 			string number = "";
 			foreach(char c in word)
-				number += (ToNumber(c) / 3) + 1;
+				number += (CharToNumber(c) / 3) + 1;
 
 			return int.Parse(number);
 		}
