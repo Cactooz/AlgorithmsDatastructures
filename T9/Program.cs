@@ -1,10 +1,14 @@
 ﻿namespace T9 {
 	internal class Program {
 		static void Main(string[] args) {
-			T9 t9 = new();
-			Console.WriteLine(t9.ChatToNumber('w'));
-			Console.WriteLine(t9.ChatToNumber('Q'));
-			Console.WriteLine(t9.CharToNumber('w'));
+			//Get the path to the dictionary file
+			string file = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\kelly.txt"));
+
+			T9 t9 = new(file);
+
+			Console.WriteLine(t9.CheckWord("HEJ"));
+
+			/*Console.WriteLine(t9.CharToNumber('w'));
 			Console.WriteLine(t9.CharToNumber('Q'));
 
 			Console.WriteLine(t9.KeyIndex(1));
@@ -16,7 +20,7 @@
 			Console.WriteLine(t9.WordToNumbers("aBcDeFg"));
 			Console.WriteLine(t9.WordToNumbers("HiJkLmN"));
 			Console.WriteLine(t9.WordToNumbers("oPrStuV"));
-			Console.WriteLine(t9.WordToNumbers("xYzÅäÖ"));
+			Console.WriteLine(t9.WordToNumbers("xYzÅäÖ"));*/
 		}
 	}
 }
