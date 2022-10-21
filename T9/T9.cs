@@ -81,6 +81,62 @@
 		}
 
 		/// <summary>
+		/// Search for all possible words from the <paramref name="input"/>.
+		/// </summary>
+		/// <param name="pointer">A <see cref="Node"/> pointer to the current <see cref="Node"/>.</param>
+		/// <param name="result">A <see cref="List{T}"/> storing all the found and allowed words.</param>
+		/// <param name="input">The inputted keys pressed sequence as a <see cref="string"/>.</param>
+		/// <param name="path">The characters that have been checked already.</param>
+		private void Search(Node pointer, List<string> result, string input, string path = "") {
+			//Return if the character does not exist
+			if(pointer == null)
+				return;
+
+			//Get the index from the input - the already checked nodes
+			int index = path.Length;
+			int length = input.Length;
+
+			//If at the end and its a valid word add it to the list
+			if(index >= length) {
+				if(pointer.Word)
+					result.Add(path);
+				return;
+			}
+			
+			//Convert the inputed strings to chars
+			char[] chars = input.ToCharArray();
+
+			//Get the tree possible characters
+			int char1 = KeyToNumber(chars[index]) * 3;
+			int char2 = char1 + 1;
+			int char3 = char1 + 2;
+
+			//Go to the tree possible next characters recursively
+			Search(pointer.Next[char1], result, input, path + NumberToChar(char1));
+			Search(pointer.Next[char2], result, input, path + NumberToChar(char2));
+			Search(pointer.Next[char3], result, input, path + NumberToChar(char3));
+		}
+
+		/// <summary>
+		/// Find all possible words from the <paramref name="input"/> of pressed keys.
+		/// </summary>
+		/// <param name="input">The inputted keys pressed sequence as a <see cref="string"/>.</param>
+		/// <returns>All possible words matching the <paramref name="input"/> in a <see cref="string"/> <see cref="Array"/>.</returns>
+		public string[] Words(string input) {
+			//Create a new pointer to the root words Node
+			Node pointer = words;
+
+			//A new list for all possible outputs
+			List<string> output = new();
+
+			//Search for all possible words
+			Search(words, output, input);
+
+			//Return the list content as array
+			return output.ToArray();
+		}
+
+		/// <summary>
 		/// Convert a inputted key <see cref="char"/> 1-9 into <see cref="int"/>.
 		/// </summary>
 		/// <param name="character">The <see cref="char"/> to convert into an <see cref="int"/>.</param>

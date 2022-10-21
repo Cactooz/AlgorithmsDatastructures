@@ -6,7 +6,14 @@
 
 			T9 t9 = new(file);
 
-			Console.WriteLine(t9.CheckWord("HEJ"));
+			Console.WriteLine(t9.WordToNumbers("fem"));
+
+			string[] array = t9.Words("225");
+			foreach(string word in array)
+				Console.WriteLine(word);
+
+
+			//Console.WriteLine(t9.CheckWord("HEJ"));
 
 			/*Console.WriteLine(t9.CharToNumber('w'));
 			Console.WriteLine(t9.CharToNumber('Q'));
