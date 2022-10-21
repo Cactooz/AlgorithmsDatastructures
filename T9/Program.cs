@@ -8,10 +8,9 @@
 
 			Console.WriteLine(t9.WordToNumbers("fem"));
 
-			string[] array = t9.Words("225");
-			foreach(string word in array)
+			List<string> list = t9.Words("225");
+			foreach(string word in list)
 				Console.WriteLine(word);
-
 
 			//Console.WriteLine(t9.CheckWord("HEJ"));
 

@@ -132,7 +132,7 @@
 			int char2 = char1 + 1;
 			int char3 = char1 + 2;
 
-			//Go to the tree possible next characters recursively
+			//Go to the three possible next characters recursively
 			Search(pointer.Next[char1], result, input, path + NumberToChar(char1));
 			Search(pointer.Next[char2], result, input, path + NumberToChar(char2));
 			Search(pointer.Next[char3], result, input, path + NumberToChar(char3));
@@ -142,8 +142,8 @@
 		/// Find all possible words from the <paramref name="input"/> of pressed keys.
 		/// </summary>
 		/// <param name="input">The inputted keys pressed sequence as a <see cref="string"/>.</param>
-		/// <returns>All possible words matching the <paramref name="input"/> in a <see cref="string"/> <see cref="Array"/>.</returns>
-		public string[] Words(string input) {
+		/// <returns>All possible words matching the <paramref name="input"/> in a <see cref="string"/> <see cref="List{T}"/>.</returns>
+		public List<string> Words(string input) {
 			//Create a new pointer to the root words Node
 			Node pointer = words;
 
@@ -154,7 +154,7 @@
 			Search(words, output, input);
 
 			//Return the list content as array
-			return output.ToArray();
+			return output;
 		}
 
 		/// <summary>
