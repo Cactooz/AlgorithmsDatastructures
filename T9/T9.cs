@@ -135,8 +135,33 @@
 					return i;
 			}
 
+		/// <summary>
+		/// Convert a number between 0 to 26 into a lowercase <see cref="char"/>.
+		/// </summary>
+		/// <param name="number">The number to convert into a <see cref="char"/>.</param>
+		/// <returns>The <see cref="char"/> of the given <paramref name="number"/>.</returns>
+		public char? NumberToChar(int number) {
+			if(number < 0 || number >= 27)
+				return null;
+
+			//Get the position in the array of the char
+			if(number <= 15)
+				return (char?)((char?)number + 97);
+			//Get special positions for chars after Q
+			if(number <= 20)
+				return (char?)((char?)number + 98);
+			//Get special positions for chars after W
+			if(number <= 23)
+				return (char?)((char?)number + 99);
+			if(number == 24)
+				return 'å';
+			if(number == 25)
+				return 'ä';
+			if(number == 26)
+				return 'ö';
+
 			//If not found return null
-			return -1;
+			return null;
 		}
 
 		public int WordToNumbers(string word) {
