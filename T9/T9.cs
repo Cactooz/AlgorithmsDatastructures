@@ -1,15 +1,36 @@
 ﻿namespace T9 {
 	internal class T9 {
-		private class Node {
+		/// <summary>
+		/// A trie to hold all possible characters for added <see cref="words"/>. Each character has a new <see cref="Array"/>
+		/// for the next characters and so on. Also marks <see cref="Node"/> that end a <see cref="word"/> to <c>true</c>.
+		/// </summary>
+		internal class Node {
+			/// <summary>
+			/// The next possible characters.
+			/// </summary>
 			private Node[] next;
+			/// <summary>
+			/// If the <see cref="Node"/> is a valid word to this point.
+			/// </summary>
 			private bool word;
 
+			/// <summary>
+			/// Constructor for <see cref="Node"/> makes a new next array of 27 empty elements.
+			/// Sets the current position to not be a word by default.
+			/// </summary>
 			public Node() {
 				next = new Node[27];
 				word = false;
 			}
 
+			/// <summary>
+			/// Get and set the whole <see cref="next"/> array.
+			/// </summary>
 			public Node[] Next { get => next; set => next = value; }
+
+			/// <summary>
+			/// Get and set if the current <see cref="Node"/> is a valid <see cref="word"/> to this point.
+			/// </summary>
 			public bool Word { get => word; set => word = value; }
 
 		}
@@ -79,7 +100,7 @@
 			//Return if a word is found
 			return pointer.Word;
 		}
-
+		
 		/// <summary>
 		/// Search for all possible words from the <paramref name="input"/>.
 		/// </summary>
@@ -176,7 +197,7 @@
 
 			//If not found return null
 			return null;
-			}
+		}
 
 		/// <summary>
 		/// Convert a number between 0 to 26 into a lowercase <see cref="char"/>.
