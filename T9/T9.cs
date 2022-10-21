@@ -151,12 +151,17 @@
 			return null;
 		}
 
-		public int WordToNumbers(string word) {
+		/// <summary>
+		/// Convert the whole inputted <paramref name="word"/> which key is pressed for each character.
+		/// </summary>
+		/// <param name="word">The word as a <see cref="string"/> to convert.</param>
+		/// <returns>All the key presses as numbers in a <see cref="string"/>.</returns>
+		public string WordToNumbers(string word) {
 			string number = "";
 			foreach(char c in word)
 				number += (CharToNumber(c) / 3) + 1;
 			
-			return int.Parse(number);
+			return number;
 		}
 
 	}
