@@ -14,33 +14,21 @@
 
 		}
 
-		private char[] chars = new char[27];
+		/// <summary>
+		/// The root <see cref="Node"/> to all possible inputted words.
+		/// </summary>
 		private Node words = new();
 
 		/// <summary>
-		/// Constructor for <see cref="T9"/>. Puts A-Ö excluding Q and W into <see cref="chars"/> array.
+		/// Constructor for <see cref="T9"/>. Reads all words from the inputted file and adds it into the <see cref="words"/> <see cref="Array"/>.
 		/// </summary>
 		/// <param name="filepath">The file path to the dictionary file as a <see cref="string"/>.</param>
 		public T9(string filepath) {
-			int j = 0;
-			//Fill the chars array with all the characters
-			for(int i = 0; i < 24; i++) {
-				//Skip Q and W
-				if(i == 16 || i == 21)
-					j++;
-
-				chars[i] = (char)(97 + j++);
-			}
-			chars[24] = 'å';
-			chars[25] = 'ä';
-			chars[26] = 'ö';
-
-
 			//Read all words from the dictionary and add all words
 			using(StreamReader reader = new StreamReader(filepath)) {
 				string line;
 
-				//Read each line (word) from the file
+				//Read each line (word) from the file and add it to the trie
 				while((line = reader.ReadLine()) != null)
 					AddWord(line);
 			}
@@ -48,7 +36,7 @@
 		}
 
 		/// <summary>
-		/// Add word into the <see cref="words"/> <see cref="Node"/> <see cref="Array"/>.
+		/// Add a word into the <see cref="words"/> <see cref="Node"/> <see cref="Array"/>.
 		/// </summary>
 		/// <param name="word">The word that should be added.</param>
 		private void AddWord(string word) {
@@ -57,7 +45,7 @@
 			//Check each character of the word
 			foreach(char c in word) {
 				//Get the index of the character
-				int index = CharToNumber(c);
+				int index = (int)CharToNumber(c);
 				
 				//Check if there are no next character array and add a new
 				if(pointer.Next[index] == null)
@@ -71,7 +59,7 @@
 		}
 
 		/// <summary>
-		/// Checks if a word exist in the inputted <see cref="words"/> <see cref="Node"/> <see cref="Array"/>.
+		/// Check if a word exist in the inputted <see cref="words"/> <see cref="Node"/> <see cref="Array"/>.
 		/// </summary>
 		/// <param name="word">The word look for.</param>
 		/// <returns><see cref="bool"/> if the word exist or not.</returns>
@@ -80,7 +68,7 @@
 
 			//Check each character of the word
 			foreach(char c in word) {
-				int index = CharToNumber(c);
+				int index = (int)CharToNumber(c);
 
 				//Go forward if the character exists
 				if(pointer.Next[index] != null)
@@ -110,29 +98,28 @@
 		/// </summary>
 		/// <param name="character">The <see cref="char"/> to convert to <see cref="int"/>.</param>
 		/// <returns><see cref="int"/> value of the inputted <paramref name="character"/>.</returns>
-		public int CharToNumber(char character) {
+		public int? CharToNumber(char character) {
 			//Make sure the inputted character is uppercase
 			character = char.ToLower(character);
 
-			int pos;
-
 			//Get the position in the array of the char
 			if(character.CompareTo('p') <= 0)
-				pos = character - 97;
+				return character - 97;
 			//Get special positions for chars after Q
-			else if(character.CompareTo('v') <= 0)
-				pos = character - 98;
+			if(character.CompareTo('v') <= 0)
+				return character - 98;
 			//Get special positions for chars after W
-			else if(character.CompareTo('z') <= 0)
-				pos = character - 99;
-			else
-				//Move position into end of array for ÅÄÖ
-				pos = 24;
+			if(character.CompareTo('z') <= 0)
+				return character - 99;
+			if(character.CompareTo('å') == 0)
+				return 24;
+			if(character.CompareTo('ä') == 0)
+				return 25;
+			if(character.CompareTo('ö') == 0)
+				return 26;
 
-			//Loop through and find the correct index of the char
-			for(int i = pos; i < 27; i++) {
-				if(chars[i].Equals(character))
-					return i;
+			//If not found return null
+			return null;
 			}
 
 		/// <summary>
