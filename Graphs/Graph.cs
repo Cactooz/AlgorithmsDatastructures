@@ -19,6 +19,9 @@ namespace Graphs {
 			public Buckets? Next { get => next; set => next = value; }
 		}
 
+		/// <summary>
+		/// Linked <see cref="Buckets"/> containing all <see cref="City"/> objects.
+		/// </summary>
 		Buckets[] cities;
 		int mod;
 
@@ -35,27 +38,37 @@ namespace Graphs {
 					//Split the read line
 					string[] row = line.Split(",");
 
-					int firstHash = Hash(row[0]);
-					int secondHash = Hash(row[1]);
+					//Create or find the two cities
+					City city1 = Lookup(row[0]);
+					City city2 = Lookup(row[1]);
 
-					AddCity(firstHash, row[0]);
-					AddCity(secondHash, row[1]);
-
+					//Convert the length of the connection to int
 					int length = int.Parse(Regex.Replace(row[2], @"\s+", ""));
 
-					AddConnection(firstHash, row[0], secondHash, row[1], length);
+					//Add the connections between the two cities
+					city1.AddConnection(city2, length);
+					city2.AddConnection(city1, length);
 				}
 			}
 		}
 
 		/// <summary>
-		/// Create a new <see cref="City"/> at the correct location in the <see cref="cities"/>
-		/// <see cref="Array"/> of <see cref="Buckets"/>.
+		/// Check if a <see cref="City"/> exist, otherwise create a new <see cref="City"/>
+		/// at the correct location in the <see cref="cities"/> <see cref="Array"/> of <see cref="Buckets"/>.
 		/// </summary>
-		/// <param name="index">The hashed location in the <see cref="cities"/> <see cref="Array"/>.</param>
 		/// <param name="name">The name of the new <see cref="City"/>.</param>
-		private void AddCity(int index, string name) {
-			if(cities[index] != null) {
+		/// <returns>The searched for or added <see cref="City"/>.</returns>
+		private City Lookup(string name) {
+			int index = Hash(name);
+
+			//Create a city if there are no yet
+			if(cities[index] == null) {
+				cities[index] = new Buckets(name);
+				return cities[index].City;
+			}
+
+			//If there already is a city at the position check through the linked Buckets
+			if(cities[index].City.Name != name) {
 				//Pointer to look through the linked buckets
 				Buckets pointer = cities[index];
 
@@ -64,41 +77,16 @@ namespace Graphs {
 					pointer = pointer.Next!;
 
 				//Set the new City to the next bucket if it does not exist
-				if(!pointer.City.Name.Equals(name))
+				if(!pointer.City.Name.Equals(name)) {
 					pointer.Next = new Buckets(name);
+					return pointer.Next.City;
+				}
+				else
+					return pointer.City;
 			}
-			else
-				//Add the City to the data array of buckets
-				cities[index] = new Buckets(name);
-		}
 
-		/// <summary>
-		/// Add connections between two <see cref="City"/> objects. One in each direction,
-		/// with the <paramref name="distance"/> between them.
-		/// </summary>
-		/// <param name="firstIndex">The hashed index of the first <see cref="City"/>.</param>
-		/// <param name="first">The <see cref="City.name"/> of the first <see cref="City"/>.</param>
-		/// <param name="secondIndex">The hashed index of the second <see cref="City"/>.</param>
-		/// <param name="second">The <see cref="City.name"/> of the second <see cref="City"/>.</param>
-		/// <param name="distance">The distance between the two <see cref="City"/>.</param>
-		private void AddConnection(int firstIndex, string first, int secondIndex, string second, int distance) {
-			//Pointer to look through the first city's linked buckets
-			Buckets firstPointer = cities[firstIndex];
-
-			//Pointer to look through the second city's linked buckets
-			Buckets secondPointer = cities[secondIndex];
-
-			//Go the where the first city is in the Buckets list
-			while(!firstPointer.City.Name.Equals(first) && firstPointer.Next != null)
-				firstPointer = firstPointer.Next!;
-
-			//Go the where the second city is in the Buckets list
-			while(!secondPointer.City.Name.Equals(second) && secondPointer.Next != null)
-				secondPointer = secondPointer.Next!;
-
-			//Add the connection between the two cities in both directions
-			firstPointer.City.AddConnection(secondPointer.City, distance);
-			secondPointer.City.AddConnection(firstPointer.City, distance);
+			//Return the city.
+			return cities[index].City;
 		}
 
 		/// <summary>
