@@ -1,5 +1,39 @@
 ﻿namespace Graphs {
+	/// <summary>
+	/// A <see cref="City"/> with a <see cref="name"/> and <see cref="Array"/>
+	/// of <see cref="Connection"/> to other <see cref="City"/> objects.
+	/// </summary>
 	internal class City {
+		/// <summary>
+		/// A connection between two <see cref="City"/>.
+		/// </summary>
+		private class Connection {
+			/// <summary>
+			/// The <see cref="City"/> the connection starts in.
+			/// </summary>
+			private readonly City startCity;
+			/// <summary>
+			/// The <see cref="City"/> the connection ends in.
+			/// </summary>
+			private readonly City endCity;
+			/// <summary>
+			/// The distance between the start and end <see cref="City"/>.
+			/// </summary>
+			private readonly int length;
+
+			/// <summary>
+			/// Constructor for <see cref="Connection"/> between two <see cref="City"/>.
+			/// </summary>
+			/// <param name="start">The starting <see cref="City"/>.</param>
+			/// <param name="destination">The ending <see cref="City"/>.</param>
+			/// <param name="distance">The distance between the two different <see cref="City">.</param>
+			public Connection(City start, City destination, int distance) {
+				startCity = start;
+				endCity = destination;
+				length = distance;
+			}
+		}
+
 		/// <summary>
 		/// The name of the <see cref="City"/>.
 		/// </summary>
