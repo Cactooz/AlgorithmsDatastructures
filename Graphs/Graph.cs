@@ -2,6 +2,10 @@
 
 namespace Graphs {
 	internal class Graph {
+		/// <summary>
+		/// Linked <see cref="Buckets"/> containing a <see cref="City"/>.
+		/// Linking to the next <see cref="Buckets"/>.
+		/// </summary>
 		private class Buckets {
 			private readonly City city;
 			private Buckets? next;
@@ -15,7 +19,13 @@ namespace Graphs {
 				next = null;
 			}
 
+			/// <summary>
+			/// The current <see cref="City"/>.
+			/// </summary>
 			public City City { get => city; }
+			/// <summary>
+			/// Links to the next <see cref="Buckets"/> with another <see cref="City"/>.
+			/// </summary>
 			public Buckets? Next { get => next; set => next = value; }
 		}
 
@@ -25,6 +35,11 @@ namespace Graphs {
 		Buckets[] cities;
 		int mod;
 
+		/// <summary>
+		/// Read the whole <paramref name="filepath"/> and add all <see cref="City"/> objects
+		/// with all <see cref="City.Connection"/> between them.
+		/// </summary>
+		/// <param name="filepath">The full file path to the file with data.</param>
 		public Graph(string filepath) {
 			//Read all connections from the file and add all cities and connections
 			using(StreamReader reader = new StreamReader(filepath)) {
@@ -58,7 +73,7 @@ namespace Graphs {
 		/// </summary>
 		/// <param name="name">The name of the new <see cref="City"/>.</param>
 		/// <returns>The searched for or added <see cref="City"/>.</returns>
-		private City Lookup(string name) {
+		public City Lookup(string name) {
 			int index = Hash(name);
 
 			//Create a city if there are no yet
