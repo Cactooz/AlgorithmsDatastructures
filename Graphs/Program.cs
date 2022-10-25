@@ -39,9 +39,12 @@
 
 					//Continue recursively down and find the shortest path
 					int? distance = ShortestPath(connection.EndCity, to, max - connection.Length);
+
 					//Add the returned path if its not null
 					if(distance != null)
 						addShort += distance;
+					else
+						continue;
 
 					//Override the shortest if the new one is shorter
 					if(addShort < shortest || shortest == null)
