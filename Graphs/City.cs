@@ -7,7 +7,7 @@
 		/// <summary>
 		/// A connection between two <see cref="City"/>.
 		/// </summary>
-		private class Connection {
+		internal class Connection {
 			/// <summary>
 			/// The <see cref="City"/> the connection starts in.
 			/// </summary>
@@ -32,6 +32,16 @@
 				endCity = destination;
 				length = distance;
 			}
+
+			/// <summary>
+			/// The <see cref="City"/> the <see cref="Connection"/> end in.
+			/// </summary>
+			public City EndCity { get => endCity; }
+			/// <summary>
+			/// The length between the <see cref="startCity"/> and <see cref="endCity"/>.
+			/// </summary>
+			public int Length { get => length; }
+
 		}
 
 		/// <summary>
@@ -56,6 +66,11 @@
 		/// The <see cref="name">name</see> of the <see cref="City"/>.
 		/// </summary>
 		public string Name { get => name; }
+		/// <summary>
+		/// The <see cref="Array"/> of <see cref="Connection"/> between this <see cref="City"/>
+		/// and all other linked <see cref="City"/> objects.
+		/// </summary>
+		public Connection[] Connections { get => connections; }
 
 		/// <summary>
 		/// Adds a new connection from the current <see cref="City"/>
