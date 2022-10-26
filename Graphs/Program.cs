@@ -11,11 +11,13 @@ namespace Graphs {
 			Graph map = new Graph(file);
 
 			string from = "Malmö";
-			string to = "Stockholm";
-			int max = 100;
+			string to = "Umeå";
+			int max = 800;
+
+			Paths paths = new();
 
 			long t0 = Stopwatch.GetTimestamp();
-			int? distance = Naive.ShortestPath(map.Lookup(from), map.Lookup(to), max);
+			int? distance = paths.ShortestPath(map.Lookup(from), map.Lookup(to), max);
 			long t1 = Stopwatch.GetTimestamp();
 
 			if(distance.HasValue)
