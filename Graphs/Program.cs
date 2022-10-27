@@ -11,8 +11,8 @@ namespace Graphs {
 			Graph map = new Graph(file);
 
 			string from = "Malmö";
-			string to = "Umeå";
-			int max = 800;
+			string to = "Kiruna";
+			int? max = null;
 
 			Paths paths = new();
 
