@@ -71,17 +71,21 @@ namespace Dijkstra {
 			}
 		}
 
-		/// <summary>
-		/// Check if a <see cref="City"/> exist, otherwise create a new <see cref="City"/>
-		/// at the correct location in the <see cref="cities"/> <see cref="Array"/> of <see cref="Buckets"/>.
-		/// </summary>
-		/// <param name="name">The name of the new <see cref="City"/>.</param>
-		/// <returns>The searched for or added <see cref="City"/>.</returns>
-		public City Lookup(string name) {
+        /// <summary>
+        /// Check if a <see cref="City"/> exist, otherwise create a new <see cref="City"/>
+        /// at the correct location in the <see cref="cities"/> <see cref="Array"/> of <see cref="Buckets"/>.
+        /// </summary>
+        /// <param name="name">The name of the new <see cref="City"/>.</param>
+        /// <param name="print">If the id of each <see cref="City"/> should be printed at creation.</param>
+        /// <returns>The searched for or added <see cref="City"/>.</returns>
+        public City Lookup(string name, bool print = false) {
 			int index = Hash(name);
 
 			//Create a city if there are no yet
 			if(cities[index] == null) {
+                if(print)
+                    Console.WriteLine($"{name}: {id}");
+
                 //Add the new city and increase the id to the next city
                 cities[index] = new Buckets(name, id++);
 				return cities[index].City;
@@ -98,6 +102,9 @@ namespace Dijkstra {
 
 				//Set the new City to the next bucket if it does not exist
 				if(!pointer.City.Name.Equals(name)) {
+                    if(print)
+                        Console.WriteLine($"{name}: {id}");
+
                     //Add the new city and increase the id to the next city
                     pointer.Next = new Buckets(name, id++);
 					return pointer.Next.City;
