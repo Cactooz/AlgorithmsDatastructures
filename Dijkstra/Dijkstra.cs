@@ -147,13 +147,16 @@ namespace Dijkstra {
 			string from = "Malmö";
 			string to = "Göteborg";
 
-			Dijkstra dijkstra = new(map.Lookup(from));
+			City fromCity = map.Lookup(from);
+			City toCity = map.Lookup(to);
+
+			Dijkstra dijkstra = new(fromCity);
 
 			long t0 = Stopwatch.GetTimestamp();
-			dijkstra.ShortestPath(map.Lookup(to));
+			dijkstra.ShortestPath(toCity);
 			long t1 = Stopwatch.GetTimestamp();
 
-			Console.WriteLine($"Shortest: {dijkstra.Done[map.Lookup(to).Id].Distance} ({(t1 - t0) * nanosecondsPerTick}ns)");
+			Console.WriteLine($"Shortest: {dijkstra.Done[toCity.Id].Distance} ({(t1 - t0) * nanosecondsPerTick}ns)");
 		}
 	}
 }
