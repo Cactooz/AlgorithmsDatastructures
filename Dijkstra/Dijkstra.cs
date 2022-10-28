@@ -83,11 +83,11 @@ namespace Dijkstra {
 			queue.Add(new Entry(start));
 		}
 
-		/// <summary>
-		/// Get the shortest path from the start <see cref="City"/> to the chosen
-		/// <paramref name="destination"/> <see cref="City"/>.
-		/// </summary>
-		/// <param name="destination">The <see cref="City"/> to find the shortest path for.</param>
+        /// <summary>
+        /// Get the shortest path from the start <see cref="City"/> to the chosen
+        /// <paramref name="destination"/> <see cref="City"/>.
+        /// </summary>
+        /// <param name="destination">The <see cref="City"/> to find the shortest path for.</param>
         /// <param name="all"><see langword="true"/> to find all <see cref="City"/> objects distance from the start,
         /// <see langword="false"/> to stop when the <paramref name="destination"/> is found.</param>
         public void ShortestPath(City destination, bool all = false) {
@@ -125,8 +125,8 @@ namespace Dijkstra {
 								//Overwrite with the new shorter path distance
 								check.Distance = distance + connection.Length;
 
-								//If the element exists in the heap, swap it otherwise add it
-									queue.Swap(check.HeapIndex!);
+                                //If the element exists in the heap, swap it otherwise add it
+								queue.Swap(check.HeapIndex!);
 							}
 						}
 					}
@@ -143,7 +143,7 @@ namespace Dijkstra {
 			Graph map = new Graph(file);
 
 			string from = "Malmö";
-			string to = "Göteborg";
+			string to = "Kiruna";
 
 			City fromCity = map.Lookup(from);
 			City toCity = map.Lookup(to);
@@ -154,7 +154,7 @@ namespace Dijkstra {
 			dijkstra.ShortestPath(toCity);
 			long t1 = Stopwatch.GetTimestamp();
 
-			Console.WriteLine($"Shortest: {dijkstra.Done[toCity.Id].Distance} ({(t1 - t0) * nanosecondsPerTick}ns)");
+			Console.WriteLine($"Shortest: {dijkstra.Done[toCity.Id].Distance} ({((t1 - t0) * nanosecondsPerTick) / 1000}μs)");
 		}
 	}
 }
