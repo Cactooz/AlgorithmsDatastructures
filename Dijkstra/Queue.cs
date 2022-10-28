@@ -99,6 +99,7 @@
 
 			//Move the last element to the start
 			queue[0] = queue[index];
+			queue[0]!.HeapIndex = 0;
 			//Remove the last element
 			queue[index--] = null;
 			size--;
