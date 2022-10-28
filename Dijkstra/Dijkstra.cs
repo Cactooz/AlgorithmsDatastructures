@@ -126,10 +126,7 @@ namespace Dijkstra {
 								check.Distance = distance + connection.Length;
 
 								//If the element exists in the heap, swap it otherwise add it
-								if(check.HeapIndex.HasValue)
 									queue.Swap(check.HeapIndex!);
-								else
-									queue.Add(check);
 							}
 						}
 					}
