@@ -57,24 +57,24 @@
 			if(!idx.HasValue || size < 2)
 				return;
 
-			int index = (int)idx;
+			int id = (int)idx;
 
 			//If the item is not already at the start
-			if(index != 0) {
+			if(id != 0) {
 				int element;
 				//Check where the parent item is located in the array
-				if(index % 2 == 0)
-					element = (index - 2) / 2;
+				if(id % 2 == 0)
+					element = (id - 2) / 2;
 				else
-					element = (index - 1) / 2;
+					element = (id - 1) / 2;
 
 				//Swap the items if the inputted item is smaller than its parent
-				if(queue[index]!.Distance < queue[element]!.Distance) {
-					Dijkstra.Entry? temp = queue[index];
-					queue[index] = queue[element];
+				if(queue[id]!.Distance < queue[element]!.Distance) {
+					Dijkstra.Entry? temp = queue[id];
+					queue[id] = queue[element];
 					queue[element] = temp;
 					//Swap the Heap index values of both entires
-					queue[index]!.HeapIndex = index;
+					queue[id]!.HeapIndex = id;
 					queue[element]!.HeapIndex = element;
 
 					//Continue recursively up through the start of the array
