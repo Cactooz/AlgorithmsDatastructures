@@ -88,7 +88,9 @@ namespace Dijkstra {
 		/// <paramref name="destination"/> <see cref="City"/>.
 		/// </summary>
 		/// <param name="destination">The <see cref="City"/> to find the shortest path for.</param>
-		public void ShortestPath(City destination) {
+        /// <param name="all"><see langword="true"/> to find all <see cref="City"/> objects distance from the start,
+        /// <see langword="false"/> to stop when the <paramref name="destination"/> is found.</param>
+        public void ShortestPath(City destination, bool all = false) {
 			while(!queue.Empty()) {
 				//Pop and get the first city from the heap
 				Entry entry = queue.Remove()!;
@@ -96,7 +98,7 @@ namespace Dijkstra {
 				City city = entry.City;
 
 				//If the destination is found don't check its connections
-				if(city == destination)
+				if(city == destination && !all)
 					break;
 
 				int distance = entry.Distance;
