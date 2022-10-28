@@ -96,9 +96,8 @@ namespace Dijkstra {
 				City city = entry.City;
 
 				//If the destination is found don't check its connections
-				//But continue to possibly find a shorter path to the destination
 				if(city == destination)
-					continue;
+					break;
 
 				int distance = entry.Distance;
 
