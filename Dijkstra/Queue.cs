@@ -28,6 +28,9 @@
 		/// </summary>
 		/// <param name="value">The <see cref="Dijkstra.Entry"/> to add.</param>
 		public void Add(Dijkstra.Entry value) {
+            //Increase the size of the amount of elements in the heap
+            size++;
+
 			//Add at the start if there are no items
 			if(queue[0] == null) {
 				//Set the entry's location in the heap
@@ -44,8 +47,6 @@
 				//Swap it up to its correct location
 				Swap(index);
 			}
-			//Increase the size of the amount of elements in the heap
-			size++;
 		}
 
 		/// <summary>
