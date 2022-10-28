@@ -31,19 +31,19 @@
             //Increase the size of the amount of elements in the heap
             size++;
 
-			//Add at the start if there are no items
-			if(queue[0] == null) {
+            //Add at the start if there are no items
+            if(queue[0] == null) {
 				//Set the entry's location in the heap
 				value.HeapIndex = 0;
 				queue[0] = value;
 				index = 0;
 			}
 			else {
+                index++;
                 //Set the entry's location in the heap
-                value.HeapIndex = index + 1;
+                value.HeapIndex = index;
                 //Add a new item at the next position
-                queue[index + 1] = value;
-				index++;
+                queue[index] = value;
 				//Swap it up to its correct location
 				Swap(index);
 			}
