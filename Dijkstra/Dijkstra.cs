@@ -125,7 +125,6 @@ namespace Dijkstra {
 								//Overwrite with the new shorter path distance
 								check.Distance = distance + connection.Length;
 
-                                //If the element exists in the heap, swap it otherwise add it
 								queue.Swap(check.HeapIndex!);
 							}
 						}
@@ -148,13 +147,24 @@ namespace Dijkstra {
 			City fromCity = map.Lookup(from);
 			City toCity = map.Lookup(to);
 
-			Dijkstra dijkstra = new(fromCity);
+            long minTime = long.MaxValue;
+			int distance = 0;
 
-			long t0 = Stopwatch.GetTimestamp();
-			dijkstra.ShortestPath(toCity);
-			long t1 = Stopwatch.GetTimestamp();
+            for(int j = 0; j < 10; j++) {
+                Dijkstra dijkstra = new(fromCity);
 
-			Console.WriteLine($"Shortest: {dijkstra.Done[toCity.Id].Distance} ({((t1 - t0) * nanosecondsPerTick) / 1000}μs)");
+                long t0 = Stopwatch.GetTimestamp();
+                dijkstra.ShortestPath(toCity, false);
+                long t1 = Stopwatch.GetTimestamp();
+
+                long time = (t1 - t0) * nanosecondsPerTick;
+                if(time < minTime)
+                    minTime = time;
+
+				distance = dijkstra.Done[toCity.Id].Distance;
+            }
+
+			Console.WriteLine($"Shortest: {distance} ({minTime/1000}μs)");
 		}
 	}
 }
