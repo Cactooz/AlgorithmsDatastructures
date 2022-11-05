@@ -16,14 +16,26 @@ namespace Graphs {
 
 			Paths paths = new();
 
-			long t0 = Stopwatch.GetTimestamp();
-			int? distance = paths.ShortestPath(map.Lookup(from), map.Lookup(to), max);
-			long t1 = Stopwatch.GetTimestamp();
+            City fromCity = map.Lookup(from);
+            City toCity = map.Lookup(to);
 
-			if(distance.HasValue)
-				Console.WriteLine($"Shortest: {distance} ({(t1 - t0) * nanosecondsPerTick}ns)");
+            long minTime = long.MaxValue;
+			int? distance = null;
+
+            for(int j = 0; j < 10; j++) {
+                long t0 = Stopwatch.GetTimestamp();
+				distance = paths.ShortestPath(fromCity, toCity, max);
+				long t1 = Stopwatch.GetTimestamp();
+
+				long time = (t1 - t0) * nanosecondsPerTick;
+				if(time < minTime)
+					minTime = time;
+            }
+
+            if(distance.HasValue)
+				Console.WriteLine($"Shortest: {distance} ({minTime/1000}μs)");
 			else
-				Console.WriteLine($"No path found with max {max} distance ({(t1 - t0) * nanosecondsPerTick}ns)");
+				Console.WriteLine($"No path found with max {max} distance ({minTime/1000}μs)");
 		}
 	}
 }
